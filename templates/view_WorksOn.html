@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>SURGERY DEPARTMENT</title>
+   </head>
+
+   <body>
+      <h1>Works On</h1>
+
+      <table>
+         <tr>
+             {% for rh in data.header %}
+             <th>{{ rh }}</th>
+             {% endfor %} 
+         </tr>
+         {% for r in data.rec %}
+           <tr>
+             {% for l in r %}
+             <td>{{ l }}</td>
+             {% endfor %} 
+           </tr>
+         {% endfor %}
+     </table>
+
+     <br>
+     <br>
+     
+      <a href="http://127.0.0.1:5000">Home Page</a>  
+   </body>
+</html>
