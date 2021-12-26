@@ -14,18 +14,41 @@ mycursor = mydb.cursor()
 #? create rooms table
 #mycursor.execute("CREATE TABLE Rooms (r_number VARCHAR(255) NOT NULL PRIMARY KEY, r_location INT)")
 #? create equipment table
-#mycursor.execute("CREATE TABLE Equipment (biocode VARCHAR(255) NOT NULL PRIMARY KEY, serial_number VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, r_check_up VARCHAR(255) NOT NULL, fk_r_no VARCHAR(255), FOREIGN KEY (fk_r_no) REFERENCES rooms (r_number))")
+#mycursor.execute("CREATE TABLE Equipment (biocode VARCHAR(255) NOT NULL PRIMARY KEY, serial_number VARCHAR(255) NOT NULL, \
+#                      type VARCHAR(255) NOT NULL, r_check_up VARCHAR(255) NOT NULL, fk_r_no VARCHAR(255), FOREIGN KEY (fk_r_no) REFERENCES rooms (r_number))")
 #? create Surgeries
-#! fadal l foreign key pssn mn table l patient
-#mycursor.execute("CREATE TABLE Surgeries (surgery_number VARCHAR(255) NOT NULL PRIMARY KEY, type VARCHAR(255) NOT NULL, start_time VARCHAR(255) NOT NULL, end_time VARCHAR(255) NOT NULL, r_no VARCHAR(255) NOT NULL, FOREIGN KEY (r_no) REFERENCES rooms (r_number))")
+#mycursor.execute("CREATE TABLE Surgeries (surgery_number VARCHAR(255) PRIMARY KEY, type VARCHAR(255) NOT NULL,\
+ #                   start_time VARCHAR(255) NOT NULL, end_time VARCHAR(255) NOT NULL, code VARCHAR(255) ,r_no VARCHAR(255) ,\
+  #                  pssn VARCHAR(255), FOREIGN KEY (pssn) REFERENCES Patient (pssn),FOREIGN KEY (r_no) REFERENCES rooms (r_number))")
 #? create Managerial employees table
-#mycursor.execute("CREATE TABLE Managerial_employees (SSN VARCHAR(255) NOT NULL UNIQUE,fname VARCHAR(250) NOT NULL,minit VARCHAR(250) NOT NULL,lname VARCHAR(250) NOT NULL,Phone_number VARCHAR(255) NOT NULL,Email VARCHAR(250),Gender VARCHAR(250) NOT NULL,Salary VARCHAR(255) NOT NULL,Position VARCHAR(250) NOT NULL,Qualifications VARCHAR(250) NOT NULL,Address VARCHAR(250),ESSSN VARCHAR(255) NOT NULL,PRIMARY KEY (SSN),FOREIGN KEY (ESSSN) REFERENCES Managerial_employees(SSN))")
+#mycursor.execute("CREATE TABLE Managerial_employees (essn VARCHAR(255)  PRIMARY KEY ,fname VARCHAR(250) NOT NULL\
+#,Phone_number VARCHAR(255) NOT NULL,Email VARCHAR(250),Gender VARCHAR(250),Salary VARCHAR(255) ,\
+# Position VARCHAR(250),Address VARCHAR(250) , esssn VARCHAR(255), FOREIGN KEY (esssn) REFERENCES Managerial_employees (essn))")
 #? create Technicians table
-#mycursor.execute("CREATE TABLE Technicians (SSN VARCHAR(255) NOT NULL UNIQUE,fname VARCHAR(250) NOT NULL,minit VARCHAR(250) NOT NULL,lname VARCHAR(250) NOT NULL,Phone_number int NOT NULL,Email VARCHAR(250),Gender VARCHAR(250) NOT NULL,Salary VARCHAR(255) NOT NULL,Position VARCHAR(250) NOT NULL,Qualifications VARCHAR(250) NOT NULL,Address VARCHAR(250),TSSSN VARCHAR(255) NOT NULL,ESSN VARCHAR(255) NOT NULL,PRIMARY KEY (SSN),FOREIGN KEY (TSSSN) REFERENCES Technicians(SSN),FOREIGN KEY (ESSN) REFERENCES Managerial_employees(SSN))")
-#? works on table
-#mycursor.execute("CREATE TABLE Works_on (MSSN VARCHAR(255) NOT NULL,Sno VARCHAR(255) NOT NULL,FOREIGN KEY (MSSN) REFERENCES Managerial_employees (SSN), FOREIGN KEY (Sno) REFERENCES Surgeries (surgery_number))")
-#!!!! FADAL L REPAIR TABLE WAITTING FOR TECHNICIANS TABLE
-#mycursor.execute("CREATE TABLE Repair (tssn VARCHAR(255) NOT NULL, biocode VARCHAR(255) NOT NULL, FOREIGN KEY (tssn) REFERENCES Technicians (SSN), FOREIGN KEY (biocode) REFERENCES Equipment (biocode) )")
+#mycursor.execute("CREATE TABLE Technicians (ssn VARCHAR(255) PRIMARY KEY ,fname VARCHAR(250) NOT NULL\
+ # ,Phone_number VARCHAR(255) NOT NULL,Email VARCHAR(250),Gender VARCHAR(250) NOT NULL,Salary VARCHAR(255) NOT NULL,Position VARCHAR(250) NOT NULL,\
+ #Qualifications VARCHAR(250) NOT NULL,Address VARCHAR(250), tssn VARCHAR(255) , tessn VARCHAR(255), \
+  # FOREIGN KEY (tssn) REFERENCES Technicians(ssn),FOREIGN KEY (tessn) REFERENCES Managerial_employees(essn) )")
+#? works on table  
+#mycursor.execute("CREATE TABLE Works_on (sssn VARCHAR(255) NOT NULL,Sno VARCHAR(255) NOT NULL,\
+ #FOREIGN KEY (sssn) REFERENCES Medical_stuff (mssn),\
+  #FOREIGN KEY (Sno) REFERENCES Surgeries (surgery_number))")
+#? repair table
+
+#mycursor.execute("CREATE TABLE Repair (rssn VARCHAR(255) NOT NULL, biocode VARCHAR(255) NOT NULL, FOREIGN KEY (rssn) REFERENCES Technicians (ssn),\
+ #FOREIGN KEY (biocode) REFERENCES Equipment (biocode) )")
+#? Medical stuff table
+#mycursor.execute( "CREATE TABLE Medical_stuff(mssn VARCHAR(255)   PRIMARY KEY,ID VARCHAR(255) NOT NULL ,fname VARCHAR(250) NOT NULL,\
+#Phone_number VARCHAR(255) NOT NULL,Email VARCHAR(250)NOT NULL,Gender VARCHAR(250) NOT NULL,\
+ #Salary VARCHAR(255) NOT NULL,Position VARCHAR(250) NOT NULL, Address VARCHAR(250)NOT NULL,msssn VARCHAR(255) NOT NULL,\
+ #FOREIGN KEY (msssn) REFERENCES Medical_stuff(mssn))")
+
+#? Patient table
+#mycursor.execute("CREATE TABLE Patient (pssn VARCHAR(255) ,ID VARCHAR(255) , fname VARCHAR(255), \
+ #  Phone_number VARCHAR(255)   , Gender VARCHAR(255) , Email VARCHAR(255), Address VARCHAR(255), Insurance VARCHAR(255), \
+  #   epssn VARCHAR(255) , mpssn VARCHAR(255), rno VARCHAR(255) , PRIMARY KEY(pssn), \
+   #   FOREIGN KEY (epssn) REFERENCES Managerial_employees (essn), FOREIGN KEY (mpssn) REFERENCES Medical_stuff (mssn), \
+    #    FOREIGN KEY (rno) REFERENCES Rooms(r_number))")
 #? insert room numbes in room table
 '''
 sql=(" INSERT INTO Rooms (r_number) VALUES (%s) ")
@@ -34,6 +57,15 @@ val={
   '3',
   '4',
   '5'
+ }
+mycursor.executemany(sql,val)
+mydb.commit()
+'''
+'''
+sql=(" INSERT INTO Managerial_employees (essn,fname,Phone_number,Email,Gender,Salary,Position,Address,esssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) ")
+val={
+  '1','omar','0111','omar@jbdgufdsh','male','10000000','doctor','AHAHAHAH','1',
+  '2','omar','0111','omar@jbdgufdsh','male','10000000','doctor','AHAHAHAH','1'
  }
 mycursor.executemany(sql,val)
 mydb.commit()
