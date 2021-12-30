@@ -274,7 +274,8 @@ def viewPatient():
     if request.method == 'POST':
       return render_template('index.html')
     else:
-        mycursor.execute("SELECT * FROM Patient")
+        mycursor.execute("SELECT p.pssn,p.ID,p.fname,p.Phone_number,p.Gender,p.Email,p.Address,p.Insurance,d.fname,p.mpssn,p.rno \
+           FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn")
         row_headers=[x[0] for x in mycursor.description] #this will extract row headers
         myresult = mycursor.fetchall()
         data={

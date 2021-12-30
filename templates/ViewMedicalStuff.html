@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html>
-   <head>
-      <title>SURGERY DEPARTMENT</title>
-   </head>
+{% extends "view_room.html" %}
 
-   <body>
-      <h1>Mecdical Stuff</h1>
+{% block head %}
+      <h1>Medical Stuff</h1>
 
-      <table>
-        <tr>
-            {% for rh in data.header %}
-            <th>{{ rh }}</th>
-            {% endfor %} 
-        </tr>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Medical Stuff SSN</th>
+            <th scope="col">ID</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Phone # </th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Position</th>
+            <th scope="col">Address</th>
+            <th scope="col">Supervisor</th>
+          </tr>
+        </thead>
+        <tbody>
         {% for r in data.rec %}
           <tr>
             {% for l in r %}
@@ -20,7 +26,6 @@
             {% endfor %} 
           </tr>
         {% endfor %}
-    </table>
-      <a href="http://127.0.0.1:5000">Home Page</a>
- </body>
-</html>
+        </tbody>
+      </table>
+      {% endblock %}

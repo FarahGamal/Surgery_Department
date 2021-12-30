@@ -1,33 +1,28 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>TEST</title>
-    </head>
+{% extends "view_room.html" %}
 
-    <body>
-        <h1>This view Surgeries tap</h1>
-       
-        <br>
-        <br>
+{% block head %}
+      <h1>Surgeries</h1>
 
-        <table>
-            <tr>
-                {% for rh in data.header %}
-                <th>{{ rh }}</th>
-                {% endfor %} 
-            </tr>
-            {% for r in data.rec %}
-              <tr>
-                {% for l in r %}
-                <td>{{ l }}</td>
-                {% endfor %} 
-              </tr>
-            {% endfor %}
-        </table>
-
-        <br>
-        <br>
-
-        <a href="http://127.0.0.1:5000">Home</a>
-    </body>
-</html>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Surgery #</th>
+            <th scope="col">Type</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time </th>
+            <th scope="col">Code</th>
+            <th scope="col">Room #</th>
+            <th scope="col">Patient SSN</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for r in data.rec %}
+          <tr>
+            {% for l in r %}
+            <td>{{ l }}</td>
+            {% endfor %} 
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% endblock %}

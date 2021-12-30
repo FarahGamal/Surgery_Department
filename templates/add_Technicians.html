@@ -1,55 +1,51 @@
-<!DOCTYPE html>
-<html>
-   <head>
-      <title>Page Title</title>
-   </head>
-
-   <body>
-      <h1>This is add Technicians tap</h1>
-
+{% extends "addRepair.html" %}
+{% block head %}
+      <h1>Add Technicians</h1>
       <form action="http://localhost:5000/add_Technicians" method="POST">
-        ssn:<br>
-        <input type="text" name="ssn" value="example">
-        <br>
-        Type:<br>
-        <input type="text" name="type" value="example">
-        <br>
-        Full name:<br>
-        <input type="text" name="fname" value="example">
-        <br>
-        Phone number:<br>
-        <input type="text" name="Phone_number" value="example">
-        <br>
-        Email:<br>
-        <input type="text" name="Email" value="example"> 
-        <br>
-        Gender:<br>
-        <input type="text" name="Gender" value="example"> 
-        <br>
-        Salary:<br>
-        <input type="text" name="Salary" value="example"> 
-        <br>
-        Position:<br>
-        <input type="text" name="Position" value="example"> 
-        <br>
-        Qualifications:<br>
-        <input type="text" name="Qualifications" value="example">    
-        <br>
-        Address:<br>
-        <input type="text" name="Address" value="example">
-        <br>
-        tssn:<br>
-        <input type="text" name="tssn" value="example">  
-        <br>
-        tessn:<br>
-        <input type="text" name="tessn" value="example">          
-        <br>
-        <br>
-        <input type="submit" value="Submit">
-      </form> 
-
-      <br>
-      <br>
-      <a href="http://127.0.0.1:5000">Home</a>
-   </body>
-</html>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Technician SSN</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="ssn" placeholder="Enter the Technician SSN">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Full Name</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="fname" placeholder="Enter the Doctor's full name">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Phone number</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="Phone_number" placeholder="Enter the Doctor's Phone #">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Email</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="E-mail" placeholder="Enter the Doctor's E-mail">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Gender</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="Gender" placeholder="Enter the Doctor's Gender">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Salary</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="Salary" placeholder="Enter the Doctor's Salary">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Position</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="Position" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Qualifications</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="Qualifications" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Address</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="Address" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Supervisor</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="tssn" >
+        </div> 
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Manager SSN</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="tessn" >
+        </div> 
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      {% endblock %}

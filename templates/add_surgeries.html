@@ -1,40 +1,36 @@
-<!DOCTYPE html>
-<html>
-   <head>
-      <title>Page Title</title>
-   </head>
+{% extends "addRepair.html" %}
+{% block head %}
 
-   <body>
-      <h1>This is add Surgeries tap</h1>
-
+      <h1>Add Surgery</h1>
       <form action="http://localhost:5000/add_surgeries" method="POST">
-        surgery number:<br>
-        <input type="text" name="surgery_number" value="example">
-        <br>
-        Type:<br>
-        <input type="text" name="type" value="example">
-        <br>
-        Start Time:<br>
-        <input type="datetime" name="start_time" value="example">
-        <br>
-        End Time:<br>
-        <input type="datetime" name="end_time" value="example">
-        <br>
-        Room number:<br>
-        <input type="text" name="r_no" value="example"> 
-        <br>
-        code:<br>
-        <input type="text" name="code" value="example"> 
-        <br>
-        pssn:<br>
-        <input type="text" name="pssn" value="example">        
-        <br>
-        <br>
-        <input type="submit" value="Submit">
-      </form> 
-
-      <br>
-      <br>
-      <a href="http://127.0.0.1:5000">Home</a>
-   </body>
-</html>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Surgery #</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="surgery_number" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Type </label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="type" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Start Time </label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="start_time" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">End Time</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="end_time" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Room #</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="r_no" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Code</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="code" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Patient SSN</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="pssn" >
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+     {% endblock %}
