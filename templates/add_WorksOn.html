@@ -1,0 +1,15 @@
+{% extends "addRepair.html" %}
+{% block head %}
+      <h1>Add WorksOn</h1>
+      <form action="http://127.0.0.1:5000/add_WorksOn" method="POST">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Manager SSN</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="sssn" placeholder="Write the SSN of the manager">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Surgery #</label>
+          <input type="text" class="form-control" id="exampleInputPassword1" name="Sno" placeholder="Write the surgery number">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      {% endblock %}

@@ -14,6 +14,10 @@ app = Flask(__name__)
 def hello_name():
    return render_template('index.html')
 
+@app.route('/calendar')
+def calendar():
+   return render_template('calendar.html')
+
 #!Eqipment add & view
 
 @app.route('/add_equipment',methods = ['POST', 'GET'])
@@ -70,13 +74,18 @@ def addsurgeries():
    else:
       return render_template('add_surgeries.html')
 
-
 @app.route('/view_surgeries',methods = ['POST', 'GET'])
 def viewsurgeries():
     if request.method == 'POST':
       return render_template('index.html')
     else:
-      mycursor.execute("SELECT * FROM Surgeries")
+      mycursor.execute("SELECT * FROM Surgeries  WHERE code IN ('red', 'yellow', 'green','blue') \
+         ORDER BY CASE code \
+           WHEN 'red' THEN 1 \
+              WHEN 'yellow' THEN 2 \
+                WHEN 'green' THEN 3 \
+                  WHEN 'blue' THEN 4 \
+                END , start_time ")
       row_headers=[x[0] for x in mycursor.description] #this will extract row headers
       myresult = mycursor.fetchall()
       data={
@@ -86,7 +95,24 @@ def viewsurgeries():
       }
       return render_template('view_surgeries.html',data=data)
 
+'''
+@app.route('/view_surgeries',methods = ['POST', 'GET'])
+def viewsurgeries():
+    if request.method == 'POST':
+      return render_template('index.html')
+    else:
+      mycursor.execute("SELECT * FROM Surgeries")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('view_surgeries.html',data=data)
 
+'''
 #! Rooms view
 
 @app.route('/view_room',methods = ['POST', 'GET'])
@@ -188,12 +214,29 @@ def viewTechnicians():
 
 #! Works on view
 
+@app.route('/add_WorksOn',methods = ['POST', 'GET'])
+def addWorksOn():
+    if request.method == 'POST': ##check if there is post data
+      sssn = request.form['sssn']
+      Sno = request.form['Sno']
+
+      #print(ssn,Sno)
+      sql = "INSERT INTO Works_on (sssn,Sno) VALUES (%s,%s)"
+      val = (sssn,Sno)
+      mycursor.execute(sql, val)
+      mydb.commit()
+      return render_template('index.html')
+    else: 
+      return render_template ('add_WorksOn.html')
+
 @app.route('/view_WorksOn',methods = ['POST', 'GET'])
 def viewWorksOn():
     if request.method == 'POST':
       return render_template('index.html')
     else:
-      mycursor.execute("SELECT * FROM Works_on")
+      mycursor.execute("SELECT m.fname,s.type \
+          FROM Works_on AS w JOIN Medical_stuff AS m ON m.mssn = w.sssn \
+            JOIN Surgeries AS s ON w.Sno = s.surgery_number")
       row_headers=[x[0] for x in mycursor.description] #this will extract row headers
       myresult = mycursor.fetchall()
       data={
@@ -317,6 +360,38 @@ def viewRepair():
           'header':row_headers
           }
         return render_template('viewRepair.html',data=data)
+
+#! contact us add & view
+
+@app.route('/add_contact_us',methods = ['POST', 'GET'])
+def addcontactus():
+   if request.method == 'POST': ##check if there is post data
+      fname = request.form['fname']
+      phone_number = request.form['phone_number']
+      subject = request.form['subject']
+      #print(name,department)
+      sql = "INSERT INTO contact_us (fname,phone_number,subject) VALUES ( %s,%s, %s)"
+      val = (fname,phone_number,subject)
+      mycursor.execute(sql, val)
+      mydb.commit()   
+      return render_template('index.html')
+   else:
+      return render_template('add_contact_us.html')
+
+@app.route('/view_contact_us',methods = ['POST', 'GET'])
+def viewContactus():
+    if request.method == 'POST':
+      return render_template('index.html')
+    else:
+        mycursor.execute("SELECT * FROM contact_us")
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+          }
+        return render_template('view_contact_us.html',data=data)
 
 if __name__ == '__main__':
    app.run()

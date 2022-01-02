@@ -49,6 +49,10 @@ mycursor = mydb.cursor()
   #   epssn VARCHAR(255) , mpssn VARCHAR(255), rno VARCHAR(255) , PRIMARY KEY(pssn), \
    #   FOREIGN KEY (epssn) REFERENCES Managerial_employees (essn), FOREIGN KEY (mpssn) REFERENCES Medical_stuff (mssn), \
     #    FOREIGN KEY (rno) REFERENCES Rooms(r_number))")
+
+#?contact us form
+#mycursor.execute("CREATE TABLE contact_us (fname VARCHAR(255), phone_number VARCHAR(255) PRIMARY KEY, subject VARCHAR(255))")   
+
 #? insert room numbes in room table
 '''
 sql=(" INSERT INTO Rooms (r_number) VALUES (%s) ")

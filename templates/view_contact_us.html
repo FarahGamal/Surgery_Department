@@ -1,0 +1,24 @@
+{% extends "view_room.html" %}
+
+{% block head %}
+      <h1>Contact Us Form</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Full Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Subject</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for r in data.rec %}
+          <tr>
+            {% for l in r %}
+            <td>{{ l }}</td>
+            {% endfor %} 
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% endblock %}
