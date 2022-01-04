@@ -1,5 +1,7 @@
 import mysql.connector
-from flask import Flask, redirect, url_for, request,render_template
+from flask import Flask, render_template, request, redirect, url_for, session
+from flask_mysqldb import MySQL,MySQLdb 
+import bcrypt
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -9,14 +11,28 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 app = Flask(__name__)
+app.secret_key = "caircocoders-ednalan-2020"
 
 @app.route('/')
 def hello_name():
    return render_template('index.html')
 
+@app.route('/doctor')
+def doctor():
+   return render_template('doctor.html')
+
+@app.route('/admin')
+def admin():
+   return render_template('admin.html')
+
+@app.route('/patient')
+def patient():
+   return render_template('patient.html')
+
 @app.route('/calendar')
 def calendar():
    return render_template('calendar.html')
+
 
 #!Eqipment add & view
 
@@ -392,6 +408,58 @@ def viewContactus():
           'header':row_headers
           }
         return render_template('view_contact_us.html',data=data)
+###############################################################################################################################!
+'''
+@app.route('/')
+def home():
+    return render_template("home.html")
 
+@app.route('/register', methods=["GET", "POST"]) 
+def register():
+    if request.method == 'GET':
+        return render_template("register.html")
+    else:
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+ 
+        #cur = mysql.connection.cursor()
+        mycursor.execute("INSERT INTO users (name, email, password) VALUES (%s,%s,%s)",(name,email,password,))
+        mydb.commit()
+        session['name'] = request.form['name']
+        session['email'] = request.form['email']
+        return render_template('home.html')
+
+ 
+@app.route('/login',methods=["GET","POST"])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+ 
+       # curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        mycursor = mydb.cursor(buffered=True)
+        mycursor.execute("SELECT * FROM users WHERE email=%s AND password=%s",(email, password))
+        user = mycursor.fetchone()
+        mycursor.close()
+
+        
+        if len(user) > 0:
+            if  bcrypt.hashpw(password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
+                session['email'] = user['email']
+                session['password'] = user['password']
+                return render_template("home.html")
+            else:
+                return "Error password and email not match"
+        else:
+            return "Error user not found"
+    else:
+        return render_template("login.html")
+ 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template("home.html")
+'''
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True)
