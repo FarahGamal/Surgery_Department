@@ -9,19 +9,23 @@
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
        <li class="nav-item">
-         <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000">Home</a>
+         <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000"><i class="fas fa-home"> Home</i></a>
        </li>
+        {% if session.log %}
+        <li class="nav-item">
+           <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/logout"><i class="fas fa-sign-out-alt"></i></a>
+        </li>
+        
+        {% else %}
+        <li class="nav-item">
+           <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/login">login</a>
+        </li>
+   
+        <li class="nav-item">
+           <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/register">register</a>
+        </li>
 
-       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/ViewPatient">Patient</a>
-      </li>
-       <li class="nav-item">
-         <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/login">login</a>
-       </li>
-
-       <li class="nav-item">
-         <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/register">register</a>
-       </li>
+        {% endif %}
 
      </ul>
      <form class="d-flex">
@@ -31,4 +35,15 @@
    </div>
  </div>
 </nav>
+<br>
+<br>
+<br>
+
+
+<div class="container">
+  <form action="http://localhost:5000/patient" method="POST" class="d-flex">
+    <input class="form-control me-2" type="text" placeholder="Enter your ssn to see your info" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+  </form> 
+</div>
 {% endblock %}

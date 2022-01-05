@@ -1,6 +1,9 @@
 import mysql.connector
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, logging, flash
 from flask_mysqldb import MySQL,MySQLdb 
+from sqlalchemy import create_engine, engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from passlib.hash import sha256_crypt
 import bcrypt
 
 mydb = mysql.connector.connect(
@@ -11,7 +14,6 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 app = Flask(__name__)
-app.secret_key = "caircocoders-ednalan-2020"
 
 @app.route('/')
 def hello_name():
@@ -25,14 +27,27 @@ def doctor():
 def admin():
    return render_template('admin.html')
 
-@app.route('/patient')
+@app.route('/patient',methods = ['POST', 'GET'])
 def patient():
-   return render_template('patient.html')
+  if request.method =='POST':
+    ssn=request.form.get('ssn')
+
+    mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",(ssn,))
+    
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    p_ssn=mycursor.fetchall()
+    print(p_ssn)
+    data={
+      'message':"data retrieved",
+      'rec':p_ssn,
+      'header':row_headers
+    }
+    return render_template('ViewPatient.html',data=data)
+  return render_template('patient.html')
 
 @app.route('/calendar')
 def calendar():
    return render_template('calendar.html')
-
 
 #!Eqipment add & view
 
@@ -111,24 +126,6 @@ def viewsurgeries():
       }
       return render_template('view_surgeries.html',data=data)
 
-'''
-@app.route('/view_surgeries',methods = ['POST', 'GET'])
-def viewsurgeries():
-    if request.method == 'POST':
-      return render_template('index.html')
-    else:
-      mycursor.execute("SELECT * FROM Surgeries")
-      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
-      
-      myresult = mycursor.fetchall()
-      data={
-         'message':"data retrieved",
-         'rec':myresult,
-         'header':row_headers
-      }
-      return render_template('view_surgeries.html',data=data)
-
-'''
 #! Rooms view
 
 @app.route('/view_room',methods = ['POST', 'GET'])
@@ -409,57 +406,74 @@ def viewContactus():
           }
         return render_template('view_contact_us.html',data=data)
 ###############################################################################################################################!
-'''
-@app.route('/')
-def home():
-    return render_template("home.html")
-
-@app.route('/register', methods=["GET", "POST"]) 
+@app.route("/register",methods=["GET","POST"])
 def register():
-    if request.method == 'GET':
-        return render_template("register.html")
-    else:
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
- 
-        #cur = mysql.connection.cursor()
-        mycursor.execute("INSERT INTO users (name, email, password) VALUES (%s,%s,%s)",(name,email,password,))
-        mydb.commit()
-        session['name'] = request.form['name']
-        session['email'] = request.form['email']
-        return render_template('home.html')
+  if request.method=="POST":
+    name=request.form.get("name")
+    username=request.form.get("username")
+    password=request.form.get("password")
+    confirm=request.form.get("confirm")
+    type=request.form.get("type")
+    secure_password=sha256_crypt.encrypt(str(password))
 
- 
-@app.route('/login',methods=["GET","POST"])
+    if password==confirm:
+      sql = "INSERT INTO users (name,username,password,type) VALUES ( %s,%s, %s,%s)"
+      val = (name,username,secure_password,type)
+      mycursor.execute(sql, val)
+      mydb.commit()
+      flash("you are registerd and can login", "success")
+      return redirect(url_for('login'))
+    else:
+      flash("password does not match", "danger")
+      return render_template("register.html")
+
+  return render_template("register.html")
+
+@app.route("/login",methods=["GET","POST"])
 def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
- 
-       # curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        mycursor = mydb.cursor(buffered=True)
-        mycursor.execute("SELECT * FROM users WHERE email=%s AND password=%s",(email, password))
-        user = mycursor.fetchone()
-        mycursor.close()
+  if request.method=="POST":
+    username=request.form.get("username")
+    password=request.form.get("password")
+    type=request.form.get("type")
 
-        
-        if len(user) > 0:
-            if  bcrypt.hashpw(password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
-                session['email'] = user['email']
-                session['password'] = user['password']
-                return render_template("home.html")
-            else:
-                return "Error password and email not match"
-        else:
-            return "Error user not found"
+    mycursor.execute("SELECT username FROM users WHERE username=%s",(username,))
+    usernamedata=mycursor.fetchone()
+
+    mycursor.execute("SELECT password FROM users WHERE username=%s",(username,))
+    passwordata=mycursor.fetchone()
+
+    mycursor.execute("SELECT type FROM users WHERE username=%s",(username,))
+    typedata=mycursor.fetchone()
+    print(typedata)
+
+    if usernamedata is None:
+      flash("No username","danger")
+      return render_template("login.html")
     else:
-        return render_template("login.html")
- 
-@app.route('/logout')
+      for passwor_data in passwordata:
+        if sha256_crypt.verify(password,passwor_data):
+          session["log"]=True
+          #flash("You are now login","success")
+          if typedata == ('doctor',):
+            return render_template("doctor.html")
+          elif typedata==('admin',):
+            return render_template("admin.html")
+          elif typedata == ('patient',):
+            return render_template("patient.html")
+          return render_template("index.html")
+        else:
+          flash("incorrect password","danger")
+          return render_template("login.html")
+
+  return render_template("login.html")
+
+@app.route("/logout")
 def logout():
-    session.clear()
-    return render_template("home.html")
-'''
+  session.clear()
+  flash("You are logger out","success")
+  return render_template("index.html")
+
+
 if __name__ == '__main__':
-   app.run(debug=True)
+  app.secret_key="1234567dailywebcoding"
+  app.run(debug=True)
