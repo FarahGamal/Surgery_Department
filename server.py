@@ -152,15 +152,14 @@ def addManagerialEmployees():
       essn = request.form['essn']
       fname = request.form['fname']
       Phone_number = request.form['Phone_number']
-      Email = request.form['Email']
       Gender = request.form['Gender']
       Salary = request.form['Salary']
       Position = request.form['Position']
       Address = request.form['Address']
       esssn = request.form['esssn']
       #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Managerial_employees (essn,fname,Phone_number,Email,Gender,Salary,Position,Address,esssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (essn,fname,Phone_number,Email,Gender,Salary,Position,Address,esssn)
+      sql = "INSERT INTO Managerial_employees (essn,fname,Phone_number,Gender,Salary,Position,Address,esssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+      val = (essn,fname,Phone_number,Gender,Salary,Position,Address,esssn)
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('index.html')
@@ -193,17 +192,15 @@ def addTechnicians():
       ssn = request.form['ssn']
       fname = request.form['fname']
       Phone_number = request.form['Phone_number']
-      Email = request.form['Email']
       Gender = request.form['Gender']
       Salary = request.form['Salary']
       Position = request.form['Position']
-      Qualifications = request.form['Qualifications']
       Address = request.form['Address']
       tssn = request.form['tssn']
       tessn = request.form['tessn']
       #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Technicians (ssn,fname,Phone_number,Email,Gender,Salary,Position,Qualifications,Address,tssn,tessn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (ssn,fname,Phone_number,Email,Gender,Salary,Position,Qualifications,Address,tssn,tessn)
+      sql = "INSERT INTO Technicians (ssn,fname,Phone_number,Gender,Salary,Position,Address,tssn,tessn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+      val = (ssn,fname,Phone_number,Gender,Salary,Position,Address,tssn,tessn)
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('index.html')
@@ -268,7 +265,6 @@ def addMedicalStuff():
       ID = request.form['ID']
       fname = request.form['fname']
       Phone_number = request.form['Phone_number']
-      Email = request.form['Email']
       Gender = request.form['Gender']
       Salary = request.form['Salary']
       Position = request.form['Position']
@@ -276,8 +272,8 @@ def addMedicalStuff():
       msssn = request.form['msssn']
      # esssn = request.form['essn']
       #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Medical_stuff (mssn,ID,fname,Phone_number,Email,Gender,Salary,Position,Address,msssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (mssn,ID,fname,Phone_number,Email,Gender,Salary,Position,Address,msssn)
+      sql = "INSERT INTO Medical_stuff (mssn,ID,fname,Phone_number,Gender,Salary,Position,Address,msssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+      val = (mssn,ID,fname,Phone_number,Gender,Salary,Position,Address,msssn)
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('index.html')
@@ -309,15 +305,14 @@ def addPatient():
       fname = request.form['fname']
       Phone_number = request.form['Phone_number']
       Gender = request.form['Gender']
-      Email = request.form['Email']
       Address = request.form['Address']
       Insurance = request.form['Insurance']
       epssn = request.form['epssn']
       mpssn = request.form['mpssn']
       rno = request.form['rno']
       #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Patient (pssn,ID,fname,Phone_number,Gender,Email,Address,Insurance,epssn,mpssn,rno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (pssn,ID,fname,Phone_number,Gender,Email,Address,Insurance,epssn,mpssn,rno)
+      sql = "INSERT INTO Patient (pssn,ID,fname,Phone_number,Gender,Email,Address,Insurance,epssn,mpssn,rno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+      val = (pssn,ID,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno)
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('index.html')
@@ -330,7 +325,7 @@ def viewPatient():
     if request.method == 'POST':
       return render_template('index.html')
     else:
-        mycursor.execute("SELECT p.pssn,p.ID,p.fname,p.Phone_number,p.Gender,p.Email,p.Address,p.Insurance,d.fname,p.mpssn,p.rno \
+        mycursor.execute("SELECT p.pssn,p.ID,p.fname,p.Phone_number,p.Gender,p.Address,p.Insurance,d.fname,p.mpssn,p.rno \
            FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn")
         row_headers=[x[0] for x in mycursor.description] #this will extract row headers
         myresult = mycursor.fetchall()
@@ -413,12 +408,11 @@ def register():
     username=request.form.get("username")
     password=request.form.get("password")
     confirm=request.form.get("confirm")
-    type=request.form.get("type")
     secure_password=sha256_crypt.encrypt(str(password))
 
     if password==confirm:
-      sql = "INSERT INTO users (name,username,password,type) VALUES ( %s,%s, %s,%s)"
-      val = (name,username,secure_password,type)
+      sql = "INSERT INTO users (name,username,password) VALUES ( %s,%s, %s)"
+      val = (name,username,secure_password)
       mycursor.execute(sql, val)
       mydb.commit()
       flash("you are registerd and can login", "success")
@@ -434,17 +428,26 @@ def login():
   if request.method=="POST":
     username=request.form.get("username")
     password=request.form.get("password")
-    type=request.form.get("type")
 
+    mycursor = mydb.cursor(buffered=True)
     mycursor.execute("SELECT username FROM users WHERE username=%s",(username,))
     usernamedata=mycursor.fetchone()
 
     mycursor.execute("SELECT password FROM users WHERE username=%s",(username,))
     passwordata=mycursor.fetchone()
+    ##############
+    mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(username,))
+    mdata=mycursor.fetchone()
+    print(mdata)
 
-    mycursor.execute("SELECT type FROM users WHERE username=%s",(username,))
-    typedata=mycursor.fetchone()
-    print(typedata)
+    mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(username,))
+    edata=mycursor.fetchone()
+    print(edata)
+
+    mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",(username,))
+    pdata=mycursor.fetchone()
+    print(pdata)
+
 
     if usernamedata is None:
       flash("No username","danger")
@@ -454,12 +457,32 @@ def login():
         if sha256_crypt.verify(password,passwor_data):
           session["log"]=True
           #flash("You are now login","success")
-          if typedata == ('doctor',):
-            return render_template("doctor.html")
-          elif typedata==('admin',):
+          if mdata:
+            mycursor.execute("SELECT * FROM Patient WHERE mpssn=%s",(username,))
+            row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+            myresult = mycursor.fetchall()
+            for x in myresult:
+                print(x)
+            data={
+              'message':"data retrieved",
+              'rec':myresult,
+              'header':row_headers
+            }
+            return render_template("ViewPatient.html",data=data)
+          elif edata:
             return render_template("admin.html")
-          elif typedata == ('patient',):
-            return render_template("patient.html")
+          elif pdata :
+            mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",(username,))
+            row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+            myresult = mycursor.fetchall()
+            for x in myresult:
+                print(x)
+            data={
+              'message':"data retrieved",
+              'rec':myresult,
+              'header':row_headers
+            }
+            return render_template("ViewPatient.html",data=data)
           return render_template("index.html")
         else:
           flash("incorrect password","danger")
@@ -470,7 +493,7 @@ def login():
 @app.route("/logout")
 def logout():
   session.clear()
-  flash("You are logger out","success")
+  #flash("You are logger out","success")
   return render_template("index.html")
 
 

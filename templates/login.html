@@ -1,18 +1,28 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div class="container">
-    <h1>Login</h1>
-    <form action="" method="post">
-        <div class="form-group">
-            <input type="text" name="username" class="from-control" placeholder="username" required>
+
+<br>
+<br>
+<br>
+<br>
+<div class="login-page">
+    <div class="form">
+      <div class="login">
+        <div class="login-header">
+          <h3>LOGIN</h3>
+          <p>Please enter your credentials to login.</p>
         </div>
-        <div class="form-group">
-            <input type="password" name="password" class="from-control" placeholder="password" required>
-        </div>
-        <div class="form-group">
-            <input type="text" name="type" class="from-control" placeholder="doctor, admin or patient" required>
-        </div>
-        <button class="btn btn-primary" type="submit">submit</button>    
-    </form>
-</div>
+      </div>
+      <form action="" method="post" class="login-form">
+        <input type="text" name="username" class="from-control" placeholder="username" required>
+        <input type="password" name="password" class="from-control" placeholder="password" required>
+        <!--<input type="text" name="type" class="from-control" placeholder="doctor, admin or patient" required>-->
+        <button class="btn btn-primary" type="submit">submit</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
 {% endblock %}

@@ -1,8 +1,19 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div class="container">
-    <h1>Register</h1>
-    <form action="" method="post">
+<br>
+<br>
+<br>
+<br>
+
+<div class="login-page">
+    <div class="form">
+      <div class="login">
+        <div class="login-header">
+          <h3>REGISTER</h3>
+          <p>Please enter your credentials to register.</p>
+        </div>
+      </div>
+      <form action="" method="post" class="login-form">
         <div class="form-group">
             <input type="text" name="name" class="from-control" placeholder="name" required>
         </div>
@@ -15,10 +26,9 @@
         <div class="form-group">
             <input type="password" name="confirm" class="from-control" placeholder="confirm password" required>
         </div>
-        <div class="form-group">
-            <input type="text" name="type" class="from-control" placeholder="doctor, admin or patient" required>
-        </div>
-        <button class="btn btn-primary" type="submit">submit</button>    
-    </form>
-</div>
+        <button class="btn btn-primary" type="submit">submit</button>
+      </form>
+    </div>
+  </div>
+
 {% endblock %}

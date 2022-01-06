@@ -1,71 +1,67 @@
 {% extends "index.html" %}
 {% block head %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light"style="background-color: #e1d6e4;">
- <div class="container-fluid">
-   <a class="navbar-brand" href="#">Navbar</a>
-   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
-   </button>
-   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-       <li class="nav-item">
-         <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000"><i class="fas fa-home"></i>Home</a>
-       </li>
 
-       <li class="nav-item dropdown">
-         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           Add
-         </a>
-         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_equipment">Equipment</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_surgeries">Surgeries</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_ManagerialEmployees">Managerial Employees</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_Technicians">Technicians</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/AddPatient">Patient</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/AddMedicalStuff">Medical stuff</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/addRepair">Repair</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_WorksOn">works on</a></li>
-         </ul>
-       </li>
+<header class="header">
 
-       <li class="nav-item dropdown">
-         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           View
-         </a>
-         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_equipment">Equipment</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_surgeries">Surgeries</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_ManagerialEmployees">Managerial Employees</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_Technicians">Technicians</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/ViewPatient">Patient</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/ViewMedicalStuff">Medical stuff</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/viewRepair">Repair</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_room">Rooms</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_WorksOn">Works on</a></li>
-           <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_contact_us">Contavt us form</a></li>
-         </ul>
-       </li>
-       {% if session.log %}
-       <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/logout"><i class="fas fa-sign-out-alt"></i>logout</a>
-       </li>
-       
-       {% else %}
-       <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/login">login</a>
-       </li>
+  <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> Surgery Department. </a>
+
+  <nav class="navbar">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Add
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_equipment">Equipment</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_surgeries">Surgeries</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_ManagerialEmployees">Managerial Employees</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_Technicians">Technicians</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/AddPatient">Patient</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/AddMedicalStuff">Medical stuff</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/addRepair">Repair</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_WorksOn">works on</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          View
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_equipment">Equipment</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_surgeries">Surgeries</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_ManagerialEmployees">Managerial Employees</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_Technicians">Technicians</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/ViewPatient">Patient</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/ViewMedicalStuff">Medical stuff</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/viewRepair">Repair</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_room">Rooms</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_WorksOn">Works on</a></li>
+          <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_contact_us">Contavt us form</a></li>
+        </ul>
+      </li>
+      <a href="http://127.0.0.1:5000"><i class="fas fa-home"></i>home</a>
+      {% if session.log %}
+      <a href="http://127.0.0.1:5000/logout">logout</a>
+      <a href="http://127.0.0.1:5000/profile">Profile</a>
+      {% else %}
+      <a href="http://127.0.0.1:5000/login">login</a>
+      <a href="http://127.0.0.1:5000/register">register</a>
+      {% endif %}
+  </nav>
+
+  <div id="menu-btn" class="fas fa-bars"></div>
+
+</header>
+
+<section class="home" id="http://127.0.0.1:5000">
+
+  <div class="image">
+      <img src="/static/Quitting a job-rafiki.png" alt="xx">
+  </div>
+
+  <div class="content">
+      <h3>Wellcome</h3>
+  </div>
   
-       <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/register">register</a>
-       </li>
+</section>
 
-       {% endif %}
-     </ul>
-     <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-       <button class="btn btn-outline-success" type="submit">Search</button>
-     </form>
-   </div>
- </div>
-</nav>
 {% endblock %}
