@@ -17,9 +17,9 @@ mycursor = mydb.cursor()
 #mycursor.execute("CREATE TABLE Equipment (biocode VARCHAR(255) NOT NULL PRIMARY KEY, serial_number VARCHAR(255) NOT NULL, \
 #                      type VARCHAR(255) NOT NULL, r_check_up VARCHAR(255) NOT NULL, fk_r_no VARCHAR(255), FOREIGN KEY (fk_r_no) REFERENCES rooms (r_number))")
 #? create Surgeries
-#mycursor.execute("CREATE TABLE Surgeries (surgery_number VARCHAR(255) PRIMARY KEY, type VARCHAR(255) NOT NULL,\
+#mycursor.execute("CREATE TABLE Surgeries (surgery_number INT AUTO_INCREMENT PRIMARY KEY , type VARCHAR(255) NOT NULL,\
  #                   start_time VARCHAR(255) NOT NULL, end_time VARCHAR(255) NOT NULL, code VARCHAR(255) ,r_no VARCHAR(255) ,\
-  #                pssn VARCHAR(255), FOREIGN KEY (pssn) REFERENCES Patient (pssn),FOREIGN KEY (r_no) REFERENCES rooms (r_number))")
+  #               pssn VARCHAR(255), FOREIGN KEY (pssn) REFERENCES Patient (pssn),FOREIGN KEY (r_no) REFERENCES rooms (r_number))")
 #? create Managerial employees table
 #mycursor.execute("CREATE TABLE Managerial_employees (essn VARCHAR(255)  PRIMARY KEY ,fname VARCHAR(250) NOT NULL\
 #,Phone_number VARCHAR(255) NOT NULL,Gender VARCHAR(250),Salary VARCHAR(255) ,\
@@ -30,7 +30,7 @@ mycursor = mydb.cursor()
  # Address VARCHAR(250), tssn VARCHAR(255) , tessn VARCHAR(255), \
   # FOREIGN KEY (tssn) REFERENCES Technicians(ssn),FOREIGN KEY (tessn) REFERENCES Managerial_employees(essn) )")
 #? works on table  
-#mycursor.execute("CREATE TABLE Works_on (sssn VARCHAR(255) NOT NULL,Sno VARCHAR(255) NOT NULL,\
+#mycursor.execute("CREATE TABLE Works_on (sssn VARCHAR(255) NOT NULL,Sno INT NOT NULL,\
  #FOREIGN KEY (sssn) REFERENCES Medical_stuff (mssn),\
   #FOREIGN KEY (Sno) REFERENCES Surgeries (surgery_number))")
 #? repair table
@@ -38,13 +38,13 @@ mycursor = mydb.cursor()
 #mycursor.execute("CREATE TABLE Repair (rssn VARCHAR(255) NOT NULL, biocode VARCHAR(255) NOT NULL, FOREIGN KEY (rssn) REFERENCES Technicians (ssn),\
  #FOREIGN KEY (biocode) REFERENCES Equipment (biocode) )")
 #? Medical stuff table
-#mycursor.execute( "CREATE TABLE Medical_stuff(mssn VARCHAR(255)   PRIMARY KEY,ID VARCHAR(255) NOT NULL ,fname VARCHAR(250) NOT NULL,\
+#mycursor.execute( "CREATE TABLE Medical_stuff(mssn VARCHAR(255)   PRIMARY KEY,fname VARCHAR(250) NOT NULL,\
 #Phone_number VARCHAR(255) NOT NULL,Gender VARCHAR(250) NOT NULL,\
-# Salary VARCHAR(255) NOT NULL,Position VARCHAR(250) NOT NULL, Address VARCHAR(250)NOT NULL,msssn VARCHAR(255) ,\
-# FOREIGN KEY (msssn) REFERENCES Medical_stuff(mssn))")
+ #Salary VARCHAR(255) NOT NULL,Position VARCHAR(250) NOT NULL, Address VARCHAR(250)NOT NULL,msssn VARCHAR(255),essn VARCHAR(255) ,\
+ #FOREIGN KEY (msssn) REFERENCES Medical_stuff(mssn), FOREIGN KEY (essn) REFERENCES  Managerial_employees(essn))")
 
 #? Patient table
-#mycursor.execute("CREATE TABLE Patient (pssn VARCHAR(255) ,ID VARCHAR(255) , fname VARCHAR(255), \
+#mycursor.execute("CREATE TABLE Patient (pssn VARCHAR(255)  , fname VARCHAR(255), \
  #  Phone_number VARCHAR(255)   , Gender VARCHAR(255) , Address VARCHAR(255), Insurance VARCHAR(255), \
   #   epssn VARCHAR(255) , mpssn VARCHAR(255), rno VARCHAR(255) , PRIMARY KEY(pssn), \
    #   FOREIGN KEY (epssn) REFERENCES Managerial_employees (essn), FOREIGN KEY (mpssn) REFERENCES Medical_stuff (mssn), \
@@ -77,19 +77,19 @@ mydb.commit()
 
 #mycursor.execute("CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(50), username VARCHAR(50), password VARCHAR(300))")
 '''
-sql=("INSERT INTO medical_stuff(mssn,ID,fname,Phone_number,Gender,Salary,Position,Address) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)")
+sql=("INSERT INTO medical_stuff(mssn,fname,Phone_number,Gender,Salary,Position,Address,essn) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)")
 val={
-('1234','m1','amr','01111111111','male','5000','doctor','19xxxx'),
-('5678','m2','adel','01111111111','male','5000','nurse','19xxxx')
+('1234','amr','01111111111','male','5000','doctor','19xxxx','4321'),
+('5678','adel','01111111111','male','5000','nurse','19xxxx','4321')
 }
 mycursor.executemany(sql,val)
 mydb.commit()
 '''
 '''
-sql=("INSERT INTO Patient(pssn,ID,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+sql=("INSERT INTO Patient(pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
 val={
-('9876','p1','mohamed','01111111111','male','19xxxx','yes','4321','1234','1'),
-('5432','p2','omar','01111111111','male','19xxxx','yes','8888','5678','2')
+('9876','mohamed','01111111111','male','19xxxx','yes','4321','1234','1'),
+('5432','omar','01111111111','male','19xxxx','yes','8888','5678','2')
 }
 mycursor.executemany(sql,val)
 mydb.commit()

@@ -10,7 +10,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>SURGERY DEPARTMENT</title>
 
     <style>
   
@@ -248,12 +247,7 @@
       text-decoration: none;
       display: block;
     }
-    .error {
-    color: red
-    }
-    .done{
-      color: green;
-    }
+    
     .dropdown-content a:hover {background-color: #f1f1f1;}
     .dropdown:hover .dropdown-content {display: block;}
     .dropdown:hover .dropbtn {background-color: #3e8e41;}
@@ -272,93 +266,100 @@
         text-align: center;
         padding-top: 2rem;
       }
-    
+      .about .row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap:2rem;
+}
       </style>
+
+    <title>SURGERY DEPARTMENT</title>
   </head>
 
-   <body>
+    <body>
+      <header class="header">
 
-    <header class="header">
+        <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> Surgery Department. </a>
+      
+        <nav class="navbar">
+            {% if session.log %}
+            <a href="http://127.0.0.1:5000/logout">logout</a>
+            {% else %}
+            <a href="http://127.0.0.1:5000/login">login</a>
+            <a href="http://127.0.0.1:5000/register">register</a>
+            {% endif %}
+        </nav>
+      
+        <div id="menu-btn" class="fas fa-bars"></div>
+      
+      </header>
 
-      <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> Surgery Department. </a>
-    
-      <nav class="navbar">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Add
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_equipment">Equipment</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_surgeries">Surgeries</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_ManagerialEmployees">Managerial Employees</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_Technicians">Technicians</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/AddPatient">Patient</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/AddMedicalStuff">Medical stuff</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/addRepair">Repair</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_WorksOn">works on</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              View
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_equipment">Equipment</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_surgeries">Surgeries</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_ManagerialEmployees">Managerial Employees</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_Technicians">Technicians</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/ViewPatient">Patient</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/ViewMedicalStuff">Medical stuff</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/viewRepair">Repair</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_room">Rooms</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_WorksOn">Works on</a></li>
-              <li><a class="dropdown-item" href="http://127.0.0.1:5000/view_contact_us">Contavt us form</a></li>
-            </ul>
-          </li>
-          <a href="http://127.0.0.1:5000/admin"><i class="fas fa-home"></i>home</a>
-          {% if session.log %}
-          <a href="http://127.0.0.1:5000/logout">logout</a>
-          {% else %}
-          <a href="http://127.0.0.1:5000/login">login</a>
-          <a href="http://127.0.0.1:5000/register">register</a>
-          {% endif %}
-      </nav>
-    
-      <div id="menu-btn" class="fas fa-bars"></div>
-    
-    </header>
+      <section class="home" id="http://127.0.0.1:5000">
+
+        <div class="image">
+            <img src="/static/Medicine-bro.png" alt="xx">
+        </div>
+      
+        <div class="content">
+            <h3>WELLCOME</h3>
+        </div>
+
+
+<section class="about" id="about">
+  <div class="row">
+  <div class="container">
+    <!-- Content here -->
+  <h1>Patient information</h1>
+  <div style="overflow-x:auto; font-size: 18px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Patient SSN</th>
+        <th scope="col">Full Name</th>
+        <th scope="col">Phone # </th>
+        <th scope="col">Gender</th>
+        <th scope="col">Address</th>
+        <th scope="col">Insurance</th>
+        <th scope="col">Doctor Name</th>
+        <th scope="col">Doctor SSN</th>
+        <th scope="col">Room #</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in data.rec %}
+      <tr>
+        {% for l in r %}
+        <td>{{ l }}</td>
+        {% endfor %} 
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  </div>
+</div>
+</section>
+     
 
     <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <div class="container">
-      <!-- Content here -->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-          <div class="{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endwith %}
-      {% block head %}
-      <h1>Add Repair</h1>
-      <form action="http://localhost:5000/addRepair" method="POST"  >
-        <div class="mb-3">
-          <label style="font-size: 15px;" >Technicians SSN</label>
-          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="rssn" placeholder="Enter the Technician SSN" required>
-        </div>
-        <div class="mb-3">
-          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Bio-code</label>
-          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="biocode" placeholder="Enter the biocode of the repaired equipment" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      {% endblock %}
-    </div>
-    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
     <footer class="footer">
       <div class="footer__bg">
         <div class="footer__container container grid">
@@ -379,25 +380,22 @@
           </div>
         </div>
       </div>
-      
     </footer>
-      <br>
-      <br>
-
-      <script>
-        let menu = document.querySelector('#menu-btn');
-        let navbar = document.querySelector('.navbar');
-      
-        menu.onclick = () =>{
-            menu.classList.toggle('fa-times');
-            navbar.classList.toggle('active');
-        }
-      
-        window.onscroll = () =>{
-            menu.classList.remove('fa-times');
-            navbar.classList.remove('active');
-        }
-      </script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-   </body>
+    <script>
+      let menu = document.querySelector('#menu-btn');
+      let navbar = document.querySelector('.navbar');
+    
+      menu.onclick = () =>{
+          menu.classList.toggle('fa-times');
+          navbar.classList.toggle('active');
+      }
+    
+      window.onscroll = () =>{
+          menu.classList.remove('fa-times');
+          navbar.classList.remove('active');
+      }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
 </html>

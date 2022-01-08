@@ -2,26 +2,27 @@
 {% block head %}
 
       <h1>Add Equipment</h1>
+    
       <form action="http://localhost:5000/add_equipment" method="POST">
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Biocode</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="biocode" >
+          <label style="font-size: 15px;" for="exampleInputEmail1" class="form-label">Biocode</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="biocode" placeholder="Enter the biocode of the equipment" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Serial # </label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="serial_number" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Serial # </label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="serial_number" placeholder="Enter the serial number of the equipment" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Type </label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="type" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Type </label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="type" placeholder="Enter the name of the equipment" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Check up date </label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="r_check_up" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Checkup date </label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="r_check_up" placeholder="Enter the checkup date of the equipment" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Room # </label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="fk_r_no" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Room # </label>
+          <input style="font-size: 20px;"  type="text" class="form-control" id="exampleInputPassword1" name="fk_r_no" placeholder="Enter the room number " required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

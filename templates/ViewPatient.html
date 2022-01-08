@@ -1,13 +1,13 @@
 {% extends "view_room.html" %}
 
 {% block head %}
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Patient SSN...">
       <h1>Patient</h1>
-
-      <table class="table">
+      <div style="overflow-x:auto; font-size: 18px;">
+        <table id="myTable">
         <thead>
           <tr>
             <th scope="col">Patient SSN</th>
-            <th scope="col">ID</th>
             <th scope="col">Full Name</th>
             <th scope="col">Phone # </th>
             <th scope="col">Gender</th>
@@ -28,4 +28,5 @@
         {% endfor %}
         </tbody>
       </table>
+      </div>
       {% endblock %}

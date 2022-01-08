@@ -59,16 +59,29 @@ def addequipment():
       type = request.form['type']
       r_check_up = request.form['r_check_up']
       fk_r_no = request.form['fk_r_no']
-      #print(name,department)
-      sql = "INSERT INTO Equipment (biocode,serial_number,type,r_check_up, fk_r_no) VALUES (%s, %s, %s, %s, %s)"
-      val = (biocode,serial_number, type, r_check_up, fk_r_no)
-      mycursor.execute(sql, val)
-      mydb.commit()   
-      return render_template('index.html')
+
+      mycursor.execute("SELECT biocode FROM Equipment WHERE biocode=%s",(biocode,))
+      check=mycursor.fetchone()
+
+      mycursor.execute("SELECT r_number FROM rooms WHERE r_number=%s",(fk_r_no,))
+      room=mycursor.fetchone()
+
+      if check:
+        flash("This Equipment already exist!","error")
+        return render_template("add_equipment.html")
+      elif room is None:
+        flash("This Room does not  exist!","error")
+        return render_template("add_equipment.html")
+      else:
+        sql = "INSERT INTO Equipment (biocode,serial_number,type,r_check_up, fk_r_no) VALUES (%s, %s, %s, %s, %s)"
+        val = (biocode,serial_number, type, r_check_up, fk_r_no)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        flash("This Equipment added successfully","done")    
+        return render_template('add_equipment.html')
    else:
       return render_template('add_equipment.html')
       
-
 @app.route('/view_equipment',methods = ['POST', 'GET'])
 def viewequipment():
     if request.method == 'POST':
@@ -89,19 +102,32 @@ def viewequipment():
 @app.route('/add_surgeries',methods = ['POST', 'GET'])
 def addsurgeries():
    if request.method == 'POST': ##check if there is post data
-      surgery_number = request.form['surgery_number']
       type = request.form['type']
       start_time = request.form['start_time']      
       end_time = request.form['end_time']
       code = request.form['code'] 
       r_no = request.form['r_no']
-      pssn = request.form['pssn']       
-      #print(name,department)
-      sql = "INSERT INTO Surgeries (surgery_number,type, start_time, end_time,code, r_no,pssn) VALUES (%s,%s,%s, %s, %s, %s, %s)"
-      val = (surgery_number, type, start_time, end_time, code,r_no,pssn)
-      mycursor.execute(sql, val)
-      mydb.commit()   
-      return render_template('index.html')
+      pssn = request.form['pssn']  
+
+      mycursor.execute("SELECT r_number FROM rooms WHERE r_number=%s",(r_no,))
+      rnumber=mycursor.fetchone()
+
+      mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",(pssn,))
+      patientssn=mycursor.fetchone()
+
+      if rnumber is None:
+        flash("This room number does not exist!","error")
+        return render_template("add_surgeries.html")
+      elif patientssn is None:
+        flash("This patient does not exist!","error")
+        return render_template("add_surgeries.html")
+      else:
+        sql = "INSERT INTO Surgeries (type, start_time, end_time,code, r_no,pssn) VALUES (%s,%s, %s, %s, %s, %s)"
+        val = ( type, start_time, end_time, code,r_no,pssn)
+        mycursor.execute(sql, val)
+        mydb.commit()   
+        flash("This Surgery added successfully","done") 
+        return render_template('add_surgeries.html')
    else:
       return render_template('add_surgeries.html')
 
@@ -157,15 +183,28 @@ def addManagerialEmployees():
       Position = request.form['Position']
       Address = request.form['Address']
       esssn = request.form['esssn']
-      #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Managerial_employees (essn,fname,Phone_number,Gender,Salary,Position,Address,esssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (essn,fname,Phone_number,Gender,Salary,Position,Address,esssn)
-      mycursor.execute(sql, val)
-      mydb.commit()
-      return render_template('index.html')
+
+      mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(essn,))
+      check=mycursor.fetchone()
+
+      mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(esssn,))
+      super=mycursor.fetchone()
+
+      if check:
+        flash("This Employee already exist!","error")
+        return render_template("add_ManagerialEmployees.html")
+      elif super is None:
+        flash("This Supervisor does not exist!","error")
+        return render_template("add_ManagerialEmployees.html")
+      else:
+        sql = "INSERT INTO Managerial_employees (essn,fname,Phone_number,Gender,Salary,Position,Address,esssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = (essn,fname,Phone_number,Gender,Salary,Position,Address,esssn)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        flash("The Employee added successfully","done")
+        return render_template('add_ManagerialEmployees.html')
     else: 
       return render_template ('add_ManagerialEmployees.html')
-
 
 
 @app.route('/view_ManagerialEmployees',methods = ['POST', 'GET'])
@@ -198,12 +237,32 @@ def addTechnicians():
       Address = request.form['Address']
       tssn = request.form['tssn']
       tessn = request.form['tessn']
-      #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Technicians (ssn,fname,Phone_number,Gender,Salary,Position,Address,tssn,tessn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (ssn,fname,Phone_number,Gender,Salary,Position,Address,tssn,tessn)
-      mycursor.execute(sql, val)
-      mydb.commit()
-      return render_template('index.html')
+
+      mycursor.execute("SELECT ssn FROM Technicians WHERE ssn=%s",(ssn,))
+      check=mycursor.fetchone()
+
+      mycursor.execute("SELECT ssn FROM Technicians WHERE ssn=%s",(tssn,))
+      super=mycursor.fetchone()
+
+      mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(tessn,))
+      emp=mycursor.fetchone()
+
+      if check:
+        flash("This Technicians already exist!","error")
+        return render_template("add_Technicians.html")
+      elif super is None:
+        flash("This Supervisor does not exist!","error")
+        return render_template("add_Technicians.html")
+      elif emp is None:
+        flash("This Employee already exist!","error")
+        return render_template("add_Technicians.html")
+      else:
+        sql = "INSERT INTO Technicians (ssn,fname,Phone_number,Gender,Salary,Position,Address,tssn,tessn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = (ssn,fname,Phone_number,Gender,Salary,Position,Address,tssn,tessn)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        flash("The Technicians added successfully","done")
+        return render_template('add_Technicians.html')
     else: 
       return render_template ('add_Technicians.html')
 
@@ -229,13 +288,26 @@ def addWorksOn():
     if request.method == 'POST': ##check if there is post data
       sssn = request.form['sssn']
       Sno = request.form['Sno']
+      
+      mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(sssn,))
+      med=mycursor.fetchone()
 
-      #print(ssn,Sno)
-      sql = "INSERT INTO Works_on (sssn,Sno) VALUES (%s,%s)"
-      val = (sssn,Sno)
-      mycursor.execute(sql, val)
-      mydb.commit()
-      return render_template('index.html')
+      mycursor.execute("SELECT surgery_number FROM Surgeries WHERE surgery_number=%s",(Sno,))
+      snumber=mycursor.fetchone()
+
+      if med is None:
+        flash("This medical stuff not found!","error")
+        return render_template("add_WorksOn.html")
+      elif snumber is None:
+        flash("This surgery number not found!","error")
+        return render_template("add_WorksOn.html")
+      else:
+        sql = "INSERT INTO Works_on (sssn,Sno) VALUES (%s,%s)"
+        val = (sssn,Sno)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        flash("Successfully added","done")
+        return render_template('add_WorksOn.html')
     else: 
       return render_template ('add_WorksOn.html')
 
@@ -262,7 +334,6 @@ def viewWorksOn():
 def addMedicalStuff():
     if request.method == 'POST': ##check if there is post data
       mssn = request.form['mssn']
-      ID = request.form['ID']
       fname = request.form['fname']
       Phone_number = request.form['Phone_number']
       Gender = request.form['Gender']
@@ -270,13 +341,33 @@ def addMedicalStuff():
       Position = request.form['Position']
       Address = request.form['Address']
       msssn = request.form['msssn']
-     # esssn = request.form['essn']
-      #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Medical_stuff (mssn,ID,fname,Phone_number,Gender,Salary,Position,Address,msssn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (mssn,ID,fname,Phone_number,Gender,Salary,Position,Address,msssn)
-      mycursor.execute(sql, val)
-      mydb.commit()
-      return render_template('index.html')
+      essn = request.form['essn']
+
+      mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(mssn,))
+      check=mycursor.fetchone()
+
+      mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(essn,))
+      emp=mycursor.fetchone()
+
+      mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(msssn,))
+      super=mycursor.fetchone()
+
+      if check:
+        flash("This medical stuff  already exist!","error")
+        return render_template("AddMedicalStuff.html")
+      elif emp is None:
+        flash("This Employee does not exist!","error")
+        return render_template("AddMedicalStuff.html")
+      elif super is None:
+        flash("This Supervisor does not exist!","error")
+        return render_template("AddMedicalStuff.html")
+      else:
+        sql = "INSERT INTO Medical_stuff (mssn,fname,Phone_number,Gender,Salary,Position,Address,msssn,essn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = (mssn,fname,Phone_number,Gender,Salary,Position,Address,msssn,essn)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        flash("The medical stuff added successfully","done")
+        return render_template('AddMedicalStuff.html')
     else: 
       return render_template ('AddMedicalStuff.html')
 
@@ -301,7 +392,6 @@ def viewMedicalStuff():
 def addPatient():
     if request.method == 'POST': ##check if there is post data
       pssn = request.form['pssn']
-      ID = request.form['ID']
       fname = request.form['fname']
       Phone_number = request.form['Phone_number']
       Gender = request.form['Gender']
@@ -310,12 +400,38 @@ def addPatient():
       epssn = request.form['epssn']
       mpssn = request.form['mpssn']
       rno = request.form['rno']
-      #print(SSN,fname, minit,lname,Phone_number,Email, Gender,Salary,Position,Qualifications,Address,TSSSN,ESSN)
-      sql = "INSERT INTO Patient (pssn,ID,fname,Phone_number,Gender,Email,Address,Insurance,epssn,mpssn,rno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-      val = (pssn,ID,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno)
-      mycursor.execute(sql, val)
-      mydb.commit()
-      return render_template('index.html')
+
+      mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",(pssn,))
+      check=mycursor.fetchone()
+
+      mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(epssn,))
+      emp=mycursor.fetchone()
+
+      mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(mpssn,))
+      med=mycursor.fetchone()
+
+      mycursor.execute("SELECT r_number FROM rooms WHERE r_number=%s",(rno,))
+      room=mycursor.fetchone()
+
+      if check:
+        flash("This Patient already exist!","error")
+        return render_template("AddPatient.html")
+      elif emp is None:
+        flash("This Employee does not exist!","error")
+        return render_template("AddPatient.html")
+      elif med is None:
+        flash("This Doctor/Nurse does not exist!","error")
+        return render_template("AddPatient.html")
+      elif room is None:
+        flash("This Room does not exist!","error")
+        return render_template("AddPatient.html")
+      else:
+        sql = "INSERT INTO Patient (pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = (pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        flash("The Patient added successfully","done")
+        return render_template('AddPatient.html')
     else: 
       return render_template ('AddPatient.html')
 
@@ -343,12 +459,26 @@ def addRepair():
    if request.method == 'POST': ##check if there is post data
       rssn = request.form['rssn']
       biocode = request.form['biocode']
-      #print(name,department)
-      sql = "INSERT INTO Repair (rssn,biocode) VALUES ( %s, %s)"
-      val = (rssn,biocode)
-      mycursor.execute(sql, val)
-      mydb.commit()   
-      return render_template('index.html')
+
+      mycursor.execute("SELECT ssn FROM Technicians WHERE ssn=%s",(rssn,))
+      tech=mycursor.fetchone()
+
+      mycursor.execute("SELECT biocode FROM Equipment WHERE biocode=%s",(biocode,))
+      equ=mycursor.fetchone()
+
+      if tech is None:
+        flash("The SSN of this technician not found!","error")
+        return render_template("addRepair.html")
+      elif equ is None:
+        flash("This biocode not found!","error")
+        return render_template("addRepair.html")
+      else:
+        sql = "INSERT INTO Repair (rssn,biocode) VALUES ( %s, %s)"
+        val = (rssn,biocode)
+        mycursor.execute(sql, val)
+        mydb.commit()   
+        flash("Successfully added","done")
+        return render_template('addRepair.html')
    else:
       return render_template('addRepair.html')
 
@@ -403,14 +533,19 @@ def viewContactus():
 ###############################################################################################################################!
 @app.route("/register",methods=["GET","POST"])
 def register():
-  if request.method=="POST":
+  
+  if request.method=="POST" :
     name=request.form.get("name")
     username=request.form.get("username")
     password=request.form.get("password")
     confirm=request.form.get("confirm")
     secure_password=sha256_crypt.encrypt(str(password))
 
-    if password==confirm:
+    mycursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+    account = mycursor.fetchone()
+    if account:
+      return render_template("register.html")
+    elif password==confirm:
       sql = "INSERT INTO users (name,username,password) VALUES ( %s,%s, %s)"
       val = (name,username,secure_password)
       mycursor.execute(sql, val)
@@ -468,8 +603,11 @@ def login():
               'rec':myresult,
               'header':row_headers
             }
-            return render_template("ViewPatient.html",data=data)
+            return render_template("newdoctor.html",data=data)
           elif edata:
+            mycursor.execute("SELECT fname FROM Managerial_employees WHERE essn=%s",(username,))
+            name=mycursor.fetchone()
+            print(name)
             return render_template("admin.html")
           elif pdata :
             mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",(username,))
@@ -482,8 +620,9 @@ def login():
               'rec':myresult,
               'header':row_headers
             }
-            return render_template("ViewPatient.html",data=data)
-          return render_template("index.html")
+            return render_template("newpatient.html",data=data)
+          else:
+            return render_template("newhome.html")
         else:
           flash("incorrect password","danger")
           return render_template("login.html")
@@ -493,7 +632,7 @@ def login():
 @app.route("/logout")
 def logout():
   session.clear()
-  #flash("You are logger out","success")
+  flash("You are logger out","success")
   return render_template("index.html")
 
 

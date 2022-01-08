@@ -3,45 +3,41 @@
       <h1>Add Patient</h1>
       <form action="http://localhost:5000/AddPatient" method="POST">
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Patient SSN</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="pssn" placeholder="Enter the Patient SSN">
+          <label style="font-size: 15px;" for="exampleInputEmail1" class="form-label">Patient SSN</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="pssn" placeholder="Enter the Patient SSN" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">ID</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="ID" placeholder="Enter the Patient's ID">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Full Name</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="fname" placeholder="Enter the Patient's full name" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="fname" placeholder="Enter the Patient's full name">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Phone number</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="Phone_number" placeholder="Enter the Patient's Phone #" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Phone number</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="Phone_number" placeholder="Enter the Patient's Phone #">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Gender</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="Gender" placeholder="Enter the Patient's Gender"  required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Gender</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="Gender" placeholder="Enter the Patient's Gender">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Address</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="Address" placeholder="Enter the Patient's Address">
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Address</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="Address" placeholder="Enter the Patient's Address">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Insurance?</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="Insurance" placeholder="Enter 'YES' or 'NO" required>
+          <div style="font-size: 13px; color: rgb(255, 115, 0);" id="emailHelp" class="form-text">Write 'Yes' if the patient have insurance else write 'NO'.</div>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Insurance</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="Insurance" placeholder="Enter 'YES' or 'NO">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Employee SSN</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="epssn" placeholder="Enter Employee SSN" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Employee SSN</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="epssn" placeholder="Enter Employee SSN">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Medical stuff SSN</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="mpssn" placeholder="Enter the Patient's doctor SSN" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Medical stuff SSN</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="mpssn" placeholder="Enter the Patient's doctor SSN">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Room #</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="rno" placeholder="Enter the Patient's room #">
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Room #</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="rno" placeholder="Enter the Patient's room #" required>
         </div>
         
         <button type="submit" class="btn btn-primary">Submit</button>

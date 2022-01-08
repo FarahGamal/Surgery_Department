@@ -1,8 +1,9 @@
 {% extends "view_room.html" %}
 
 {% block head %}
-      <h1>Works on</h1>
 
+      <h1>Works on</h1>
+      <div style="overflow-x:auto; font-size: 18px;">
       <table class="table">
         <thead>
           <tr>
@@ -20,4 +21,5 @@
         {% endfor %}
         </tbody>
       </table>
+      </div>
       {% endblock %}

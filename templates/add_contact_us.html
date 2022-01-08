@@ -347,15 +347,15 @@ html{
     </div>
     <div class="row">
       <div class="column">
-        <img src="https://www.w3schools.com/w3images/map.jpg" style="width:100%">
+        <img src="/static/Contact us-amico.png " style="width:100%">
       </div>
       <div class="column">
         <form action="http://localhost:5000/add_contact_us" method="POST">
-          <label>First Name</label>
-          <input type="text"  name="fname" placeholder="Your name..">
-          <label  >Phone number</label>
-          <input type="text"  name="phone_number" placeholder="Your phone number..">
-          <label >Subject</label>
+          <label style="font-size: 15px;">First Name</label>
+          <input type="text"  name="fname" placeholder="Your name.." required>
+          <label  style="font-size: 15px;">Phone number</label>
+          <input type="text"  name="phone_number" placeholder="Your phone number.." required>
+          <label style="font-size: 15px;">Subject</label>
           <textarea  name="subject" placeholder="Write something.." style="height:170px"></textarea>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

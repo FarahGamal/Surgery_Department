@@ -328,22 +328,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-          .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: var(--green);
-            color: white;
-            text-align: center;
-            padding-top: 2rem;
-          }
+.error {
+    color: red
+    }
+    .done{
+      color: green;
+    } 
+    
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+    background-color: var(--green);
+    color: white;
+   text-align: center;
+   padding-top: 2rem;
+     }
           
           </style>
           
-        
+       
     </head>
     <body class="loggedin">
+
+       
+
       <header class="header">
 
         <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> Surgery Department. </a>
@@ -359,8 +369,15 @@ body {
         </nav>
       
         <div id="menu-btn" class="fas fa-bars"></div>
+        
       
       </header>
+ 
+
+      {% include "includes/_message.html "%}
+        {% block body %} 
+        {% endblock %} 
+    
         <footer class="footer">
           <div class="footer__bg">
             <div class="footer__container container grid">
@@ -382,9 +399,7 @@ body {
             </div>
           </div>
         </footer>
-        {% include "includes/_message.html "%}
-        {% block body %} 
-        {% endblock %}
+
 
         <script>
           let menu = document.querySelector('#menu-btn');

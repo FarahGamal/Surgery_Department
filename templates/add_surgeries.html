@@ -4,33 +4,36 @@
       <h1>Add Surgery</h1>
       <form action="http://localhost:5000/add_surgeries" method="POST">
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Surgery #</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="surgery_number" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Type </label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="type" required placeholder="Enter  the type of the surgery" >
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Type </label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="type" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Start Time </label>
+          <input style="font-size: 20px;"type="datetime" class="form-control" id="exampleInputPassword1" name="start_time" placeholder="Enter the start time of the surgery" required >
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Start Time </label>
-          <input type="datetime" class="form-control" id="exampleInputPassword1" name="start_time" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">End Time</label>
+          <input style="font-size: 20px;"type="datetime" class="form-control" id="exampleInputPassword1" name="end_time" placeholder="Enter the end time of the surgery" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">End Time</label>
-          <input type="datetime" class="form-control" id="exampleInputPassword1" name="end_time" >
+          <label style="font-size: 15px;" for="exampleInputPassword1" class="form-label">Code</label>
+          <input style="font-size: 20px;"type="text" class="form-control" id="exampleInputPassword1" name="code" placeholder="Enter 'red', 'yellow', 'green', 'blue'" required>
+          <div style="font-size: 13px; color: rgb(255, 115, 0);" id="emailHelp" class="form-text">Where 'Red' is the highest risk and 'blue' is the least one.</div>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Room #</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="r_no" >
+          <label style="font-size: 15px;"for="exampleInputPassword1" class="form-label">Patient SSN</label>
+          <input style="font-size: 20px;" type="text" class="form-control" id="exampleInputPassword1" name="pssn" placeholder="Enter the patient ssn" required>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Code</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="code" >
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Patient SSN</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" name="pssn" >
+          <label style="font-size: 15px;"for="exampleInputPassword1" class="form-label">Room #</label>
+          <input style="font-size: 20px;"type="text" class="form-control" id="exampleInputPassword1" name="r_no" placeholder="Enter the room number of the surgery" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+<br>
+<br>
+<br>
+<br>
+<br>
+    
      {% endblock %}
