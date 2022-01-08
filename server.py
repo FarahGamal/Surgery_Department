@@ -544,17 +544,17 @@ def register():
     mycursor.execute('SELECT * FROM users WHERE username = %s', (username,))
     account = mycursor.fetchone()
     if account:
-      return render_template("register.html")
+      return render_template("register.html",error="THIS ACCOUNT ALREADY EXIST")
     elif password==confirm:
       sql = "INSERT INTO users (name,username,password) VALUES ( %s,%s, %s)"
       val = (name,username,secure_password)
       mycursor.execute(sql, val)
       mydb.commit()
       flash("you are registerd and can login", "success")
-      return redirect(url_for('login'))
+      return render_template("login.html",message="you are registerd and can login")
     else:
       flash("password does not match", "danger")
-      return render_template("register.html")
+      return render_template("register.html",error="PASSWORD DOES NOT MATCH")
 
   return render_template("register.html")
 
@@ -591,7 +591,7 @@ def login():
       for passwor_data in passwordata:
         if sha256_crypt.verify(password,passwor_data):
           session["log"]=True
-          #flash("You are now login","success")
+          flash("You are now login","success")
           if mdata:
             mycursor.execute("SELECT * FROM Patient WHERE mpssn=%s",(username,))
             row_headers=[x[0] for x in mycursor.description] #this will extract row headers
@@ -625,7 +625,7 @@ def login():
             return render_template("newhome.html")
         else:
           flash("incorrect password","danger")
-          return render_template("login.html")
+          return render_template("login.html",error="incorrect password")
 
   return render_template("login.html")
 
