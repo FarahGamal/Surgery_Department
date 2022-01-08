@@ -102,6 +102,7 @@ def viewequipment():
 @app.route('/add_surgeries',methods = ['POST', 'GET'])
 def addsurgeries():
    if request.method == 'POST': ##check if there is post data
+      surgery_number = request.form['surgery_number']
       type = request.form['type']
       start_time = request.form['start_time']      
       end_time = request.form['end_time']
@@ -122,8 +123,8 @@ def addsurgeries():
         flash("This patient does not exist!","error")
         return render_template("add_surgeries.html")
       else:
-        sql = "INSERT INTO Surgeries (type, start_time, end_time,code, r_no,pssn) VALUES (%s,%s, %s, %s, %s, %s)"
-        val = ( type, start_time, end_time, code,r_no,pssn)
+        sql = "INSERT INTO Surgeries (surgery_number,type, start_time, end_time,code, r_no,pssn) VALUES (%s,%s,%s, %s, %s, %s, %s)"
+        val = (surgery_number, type, start_time, end_time, code,r_no,pssn)
         mycursor.execute(sql, val)
         mydb.commit()   
         flash("This Surgery added successfully","done") 
