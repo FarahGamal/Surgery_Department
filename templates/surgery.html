@@ -3,7 +3,7 @@
 {% block head %}
 <section class="home-section">
   <div class="text">add_surgeries<div class="container">
-    <form action="http://localhost:5000/view_surgeries" method="POST" class="d-flex">
+    <form action="http://localhost:5000/surgery" method="POST" class="d-flex">
       <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SURGERY#..." aria-label="Search">
       <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
     </form> 
@@ -11,13 +11,18 @@
 </div>
 
   <a href="http://127.0.0.1:5000/add_surgeries" class="button">ADD Surgeries</a>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Surgery#...">
+
       <div style="overflow-x:auto; font-size: 18px;">
         <table id="myTable">
         <thead>
           <tr>
             <th scope="col">Surgery #</th>
             <th scope="col">Type</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time </th>
+            <th scope="col">Code</th>
+            <th scope="col">Room #</th>
+            <th scope="col">Patient SSN</th>
           </tr>
         </thead>
         <tbody>

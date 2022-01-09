@@ -346,24 +346,169 @@ html{
 
 <style>
     
-  .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--green);
-    color: white;
-    text-align: center;
+    * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            height: 100vh;
+            user-select: none;
+        }
+        
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        
+        ul {
+            list-style-type: none;
+        }
+        
+        .month {
+            padding: 70px 25px;
+            width: 100%;
+            height: 50px;
+            background-color: #35403e;
+            text-align: center;
+        }
+        
+        .month .prev {
+            float: left;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+        
+        .month .next {
+            float: right;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+        
+        .month ul {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .month ul li {
+            color: white;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 900;
+        }
+        
+        .weekdays {
+            margin: 0;
+            
+            padding: 10px 0;
+            background-color: #ddd;
+        }
+        
+        .weekdays li {
+            display: inline-block;
+            width: 12.6%;
+            color: #666;
+            text-align: center;
+        }
+        
+        .days {
+            padding: 10px 0;
+            background-color: #eee;
+            margin: 0;
+        }
+        
+        .days li {
+            display: inline-block;
+            width: 13.6%;
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 15px;
+            color: #777;
+        }
+
+        /* lets add some active class  for current date*/
+        .active{
+            padding: 5px;
+            background-color: #35403e;
+            color: white;
+        }
+        /*  TO make it responsive lets add some media queries */
+        
+        @media screen and (max-width:720px) {
+            .weekdays li,
+            .days li {
+                width: 13.1%;
+            }
+        }
+        
+        @media screen and (max-width:420px) {
+            .weekdays li,
+            .days li {
+                width: 12.1%;
+            }
+            .days li .active{
+                padding: 2px;
+            }
+        }
+        
+        @media screen and (max-width:290px) {
+            .weekdays li,
+            .days li {
+                width: 12.2%;
+            }
+        }
+        
+    .footer .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    gap:2rem;
+}
+
+.footer .box-container .box h3{
+    font-size: 2.5rem;
+    color:var(--black);
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a{
+    display: block;
+    font-size: 1.5rem;
+    color:var(--light-color);
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a i{
+    padding-right: .5rem;
+    color:var(--green);
+}
+
+.footer .box-container .box a:hover i{
+    padding-right:2rem;
+}
+
+.footer .credit{
+    padding: 1rem;
     padding-top: 2rem;
-  }
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    color:var(--light-color);
+    border-top: .1rem solid rgba(0, 0, 0, .1);
+}
+
+.footer .credit span{
+    color:var(--green);
+}
 
   </style>
 
 
   </head>
 
-
-  <body>
+<body onload="calendar()">
 
 
 <!-- header section starts  -->
@@ -387,6 +532,149 @@ html{
 </header>
 
 <!-- header section ends -->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 <!-- home section starts  -->
 <section class="home" id="http://127.0.0.1:5000">
@@ -522,27 +810,155 @@ html{
 <br>
 <!-- doctors section ends -->
 
-    <footer class="footer">
-      <div class="footer__bg">
-        <div class="footer__container container grid">
-          <div class="footer__socials">
-            <a class="btn btn-primary" href="https://www.facebook.com/" role="button">
-              <i class="uil uil-facebook-f"></i>
-            </a>
+<!-- footer section starts  -->
 
-            <a class="btn btn-primary" href="https://linkedin.com/" role="button" class="btn btn-secondary">
-              <i class="uil uil-linkedin"></i>
-          </a>
+<section class="footer">
 
-            <a class="btn btn-primary" href="http://127.0.0.1:5000/calendar" role="button">
-              <i class="far fa-calendar-alt"></i>
-          </a>
+    <div class="box-container">
 
-         
-          </div>
+        <div class="box">
+            <div class="month">
+                <ul>
+                    <!-- add previous and next buttons -->
+                    <li class="prev">&#10094;</li>
+                    <li class="next">&#10095;</li>
+                    <li class="month-title">
+                        <span class="month-name"></span>
+                        <br>
+                        <span class="year"></span>
+                    </li>
+                </ul>
+            </div>
+            <ul class="weekdays">
+                <li>Mo</li>
+                <li>Tu</li>
+                <li>We</li>
+                <li>Th</li>
+                <li>Fr</li>
+                <li>Sa</li>
+                <li>Su</li>
+            </ul>
+        
+            
+        
+            <ul class="days">
+            
+            </ul>
+        
+            <script>
+                 //   now Lets make our calendar dynamic using some javascript
+        
+            let dayList = document.querySelector('.days');
+            let monthName = document.querySelector('.month-name');
+            let yearName = document.querySelector('.year');
+            let prev = document.querySelector('.prev');
+            let next = document.querySelector('.next');
+        
+            // lets create an Date object
+        
+            let dt = new Date();
+            let month = dt.getMonth()+1 //as it will return value between 0-11 so to make it 1-12 we add 1 to it
+            let year = dt.getFullYear();
+            let currentDay = dt.getDate();
+        
+            // make an array of month name to map with the month value we obtained using getMonth()
+            let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'july', 'August', 'September', 'October', 'November', 'December']
+        
+        
+            // now lets handle the previous and next button click
+            prev.addEventListener('click',event=>{
+                if(month===1){
+                    month =12;
+                    month-=1;
+                }else{
+                    month-=1;
+                }
+                calendar();
+            })
+        
+            next.addEventListener('click',event=>{
+                if(month===12){
+                    month =1;
+                    month+=1;
+                }else{
+                    month+=1;
+                }
+                calendar();
+            })
+            // now lets make a calendar function
+        
+            const calendar = ()=>{
+                monthName.innerHTML = monthNames[month-1];
+                yearName.innerHTML = year;
+                dayList.innerHTML = ''
+                
+                daysInMonth = new Date(year, month, 0).getDate(); //get toatl number of days in a particular month
+        
+        
+                //  but still there is a problem
+                // you can see that for every month the date starts from monday
+                // it should not be as that
+                // date of a new month should start from the next immediate dat from when the previous month ends
+                // so lets match that pattern by adding gaps before the starting of the day in month
+        
+                // get day number at which the current month start (0 for sunday, 6 for saturday)
+        
+                dayNumber = new Date(year,month-1,1).getDay();
+                let gaps
+                if (dayNumber === 0) {
+                    gaps = 6
+                }else{
+                    gaps = dayNumber - 1;
+                    // Ex:: if it is monday dayNumber = 1, so gaps = 1-1 = 0;
+                    // if it is thursdat dayNumber = 4, so gaps = 4-1 = 3;
+                }
+        
+                for(day = -gaps + 1 ;day<=daysInMonth; day++){
+                    const days = document.createElement('li');
+                    if(day<=0){
+                        days.innerHTML = "";
+                        dayList.appendChild(days);
+                    } else if (day===currentDay&&month===dt.getMonth()+1 && year===dt.getFullYear()){
+                        //make this date as active as it is current date i.e. today
+                        days.setAttribute('class','active');
+                        days.innerHTML = day;
+                        dayList.appendChild(days)
+                    }
+                    else{
+                        days.innerHTML = day;
+                        dayList.appendChild(days);
+                    }
+                }
+            }
+        
+            // thats it our calendar is ready
+        
+                
+            
+            </script>
         </div>
-      </div>
-    </footer>
+
+        
+
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="#"> <i class="fas fa-phone"></i> +123-456-7890 </a>
+            <a href="#"> <i class="fas fa-phone"></i> +111-222-3333 </a>
+            <a href="#"> <i class="fas fa-envelope"></i> shaikhanas@gmail.com </a>
+            <a href="#"> <i class="fas fa-envelope"></i> anasbhai@gmail.com </a>
+            <a href="#"> <i class="fas fa-map-marker-alt"></i> mumbai, india - 400104 </a>
+        </div>
+
+        <div class="box">
+            <h3>follow us</h3>
+            <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+            <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+        </div>
+
+    </div>
+
+</section>
 
 
     {% include "includes/_message.html "%}

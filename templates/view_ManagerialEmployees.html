@@ -1,21 +1,25 @@
 {% extends "view_room.html" %}
 
 {% block head %}
+<section class="home-section">
+  <div class="text">Employees
+    <div class="container">
+      <form action="http://localhost:5000/view_ManagerialEmployees" method="POST" class="d-flex">
+        <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+      </form> 
+    </div>
+  </div>
+  <a href="http://127.0.0.1:5000/add_ManagerialEmployees" class="button">ADD Employee</a>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Employee ssn...">
-      <h1>Managerial Employees</h1>
+
       <div style="overflow-x:auto; font-size: 18px;">
         <table id="myTable">
         <thead>
           <tr>
             <th scope="col">Employees SSN</th>
             <th scope="col">Full Name</th>
-            <th scope="col">Phone #</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Salary</th>
             <th scope="col">Position</th>
-            <th scope="col">Address</th>
-            <th scope="col">Supervisor</th>
           </tr>
         </thead>
         <tbody>
@@ -29,4 +33,5 @@
         </tbody>
       </table>
       </div>
+      </section>
       {% endblock %}

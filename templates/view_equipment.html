@@ -1,20 +1,24 @@
 {% extends "view_room.html" %}
 
 {% block head %}
-
-
+<section class="home-section">
+  <div class="text">Equipments
+    <div class="container">
+      
+      <form action="http://localhost:5000/view_equipment" method="POST" class="d-flex">
+        <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the BIO-CODE..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+      </form> 
+    </div>
+  </div>
+  <a href="http://127.0.0.1:5000/add_equipment" class="button">ADD Equipment</a>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Bio-code...">
-
-      <h1>Equipments</h1>
       <div style="overflow-x:auto; font-size: 18px;">
         <table id="myTable">
         <thead>
           <tr>
             <th scope="col">Bio-code</th>
-            <th scope="col">Seial #</th>
             <th scope="col">Type</th>
-            <th scope="col">Checkup Date</th>
-            <th scope="col">Room #</th>
           </tr>
         </thead>
         <tbody>
@@ -28,10 +32,6 @@
         </tbody>
       </table>
       </div>
-<br>
-<br>
-<br>
-<br>
-<br>
+</section>
      
       {% endblock %}

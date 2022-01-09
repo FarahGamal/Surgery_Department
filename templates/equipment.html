@@ -2,24 +2,24 @@
 
 {% block head %}
 <section class="home-section">
-  <div class="text">Patients
+  <div class="text">Equipments
     <div class="container">
-      <form action="http://localhost:5000/ViewPatient" method="POST" class="d-flex">
-        <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+      <form action="http://localhost:5000/equipment" method="POST" class="d-flex">
+        <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the BIO-CODE..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
       </form> 
     </div>
   </div>
-  <a href="http://127.0.0.1:5000/AddPatient" class="button">ADD Patient</a>
+  <a href="http://127.0.0.1:5000/add_equipment" class="button">ADD Equipment</a>
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Patient SSN...">
       <div style="overflow-x:auto; font-size: 18px;">
-        <table id="myTable" >
+        <table id="myTable">
         <thead>
           <tr>
-            <th scope="col">Patient SSN</th>
-            <th scope="col">Full Name</th>
-            <th scope="col">Condition</th>
+            <th scope="col">Bio-code</th>
+            <th scope="col">Seial #</th>
+            <th scope="col">Type</th>
+            <th scope="col">Checkup Date</th>
             <th scope="col">Room #</th>
           </tr>
         </thead>
@@ -34,5 +34,6 @@
         </tbody>
       </table>
       </div>
-      </section>
+</section>
+     
       {% endblock %}

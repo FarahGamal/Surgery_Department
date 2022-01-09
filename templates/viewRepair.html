@@ -1,9 +1,15 @@
 {% extends "view_room.html" %}
 
 {% block head %}
-      <h1>Repair</h1>
+<section class="home-section">
+  <div class="text">Repair</div>
+<a href="http://127.0.0.1:5000/addRepair" class="button">ADD Repair</a>
+
+  
+
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for name...">
       <div style="overflow-x:auto; font-size: 18px;">
-      <table class="table">
+      <table id="myTable">
         <thead>
           <tr>
             <th scope="col">Full Name</th>
@@ -23,4 +29,5 @@
         </tbody>
       </table>
       </div>
+      </section>
       {% endblock %}

@@ -1,3 +1,4 @@
+from logging import error
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, session, logging, flash
 from flask_mysqldb import MySQL,MySQLdb 
@@ -26,24 +27,6 @@ def doctor():
 @app.route('/admin')
 def admin():
    return render_template('admin.html')
-
-@app.route('/patient',methods = ['POST', 'GET'])
-def patient():
-  if request.method =='POST':
-    ssn=request.form.get('ssn')
-
-    mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",(ssn,))
-    
-    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
-    p_ssn=mycursor.fetchall()
-    print(p_ssn)
-    data={
-      'message':"data retrieved",
-      'rec':p_ssn,
-      'header':row_headers
-    }
-    return render_template('ViewPatient.html',data=data)
-  return render_template('patient.html')
 
 @app.route('/calendar')
 def calendar():
@@ -85,9 +68,19 @@ def addequipment():
 @app.route('/view_equipment',methods = ['POST', 'GET'])
 def viewequipment():
     if request.method == 'POST':
-      return render_template('index.html')
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT biocode,serial_number,type,r_check_up,fk_r_no FROM Equipment WHERE biocode=%s",(ssn,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      p_ssn=mycursor.fetchall()
+      print(p_ssn)
+      data={
+        'message':"data retrieved",
+        'rec':p_ssn,
+        'header':row_headers
+      }
+      return render_template('equipment.html',data=data)
     else:
-      mycursor.execute("SELECT * FROM Equipment")
+      mycursor.execute("SELECT biocode,type FROM Equipment")
       row_headers=[x[0] for x in mycursor.description] #this will extract row headers
       myresult = mycursor.fetchall()
       data={
@@ -132,12 +125,24 @@ def addsurgeries():
    else:
       return render_template('add_surgeries.html')
 
+      
 @app.route('/view_surgeries',methods = ['POST', 'GET'])
 def viewsurgeries():
     if request.method == 'POST':
-      return render_template('index.html')
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT s.surgery_number,s.type,s.start_time,s.end_time,s.code,s.r_no,p.fname \
+        FROM Surgeries AS s JOIN Patient AS p ON s.pssn=p.pssn WHERE s.surgery_number=%s",(ssn,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      p_ssn=mycursor.fetchall()
+      print(p_ssn)
+      data={
+        'message':"data retrieved",
+        'rec':p_ssn,
+        'header':row_headers
+      }
+      return render_template('surgery.html',data=data)
     else:
-      mycursor.execute("SELECT * FROM Surgeries  WHERE code IN ('red', 'yellow', 'green','blue') \
+      mycursor.execute("SELECT surgery_number,type FROM Surgeries  WHERE code IN ('red', 'yellow', 'green','blue') \
          ORDER BY CASE code \
            WHEN 'red' THEN 1 \
               WHEN 'yellow' THEN 2 \
@@ -211,9 +216,20 @@ def addManagerialEmployees():
 @app.route('/view_ManagerialEmployees',methods = ['POST', 'GET'])
 def viewManagerialEmployees():
      if request.method == 'POST':
-      return render_template('index.html')
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT p.essn,p.fname,p.Phone_number,p.Gender,p.Salary,p.Position,p.Address,d.fname \
+            FROM Managerial_employees AS p LEFT OUTER JOIN Managerial_employees AS d ON p.esssn = d.essn WHERE p.essn=%s",(ssn,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      p_ssn=mycursor.fetchall()
+      print(p_ssn)
+      data={
+        'message':"data retrieved",
+        'rec':p_ssn,
+        'header':row_headers
+      }
+      return render_template('employee.html',data=data)
      else:
-      mycursor.execute("SELECT * FROM Managerial_employees")
+      mycursor.execute("SELECT essn, fname, Position FROM Managerial_employees")
       row_headers=[x[0] for x in mycursor.description] #this will extract row headers
       myresult = mycursor.fetchall()
       data={
@@ -270,9 +286,20 @@ def addTechnicians():
 @app.route('/view_Technicians',methods = ['POST', 'GET'])
 def viewTechnicians():
     if request.method == 'POST':
-      return render_template('index.html')
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT p.ssn,p.fname,p.Phone_number,p.Gender,p.Salary,p.Position,p.Address,d.fname \
+            FROM Technicians AS p LEFT OUTER JOIN Technicians AS d ON p.tssn = d.ssn WHERE p.ssn=%s",(ssn,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      p_ssn=mycursor.fetchall()
+      print(p_ssn)
+      data={
+        'message':"data retrieved",
+        'rec':p_ssn,
+        'header':row_headers
+      }
+      return render_template('technician.html',data=data)
     else:
-      mycursor.execute("SELECT * FROM Technicians")
+      mycursor.execute("SELECT ssn,fname,Position FROM Technicians")
       row_headers=[x[0] for x in mycursor.description] #this will extract row headers
       myresult = mycursor.fetchall()
       data={
@@ -375,9 +402,20 @@ def addMedicalStuff():
 @app.route('/ViewMedicalStuff',methods = ['POST', 'GET'])
 def viewMedicalStuff():
     if request.method == 'POST':
-      return render_template('index.html')
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT p.mssn,p.fname,p.Phone_number,p.Gender,p.Salary,p.Position,p.Address,d.fname \
+            FROM Medical_stuff AS p LEFT OUTER JOIN Medical_stuff AS d ON p.msssn = d.mssn WHERE p.mssn=%s",(ssn,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      p_ssn=mycursor.fetchall()
+      print(p_ssn)
+      data={
+        'message':"data retrieved",
+        'rec':p_ssn,
+        'header':row_headers
+      }
+      return render_template('doctor.html',data=data)
     else:
-      mycursor.execute("SELECT * FROM Medical_stuff")
+      mycursor.execute("SELECT mssn,fname,Position FROM Medical_stuff")
       row_headers=[x[0] for x in mycursor.description] #this will extract row headers
       myresult = mycursor.fetchall()
       data={
@@ -401,6 +439,7 @@ def addPatient():
       epssn = request.form['epssn']
       mpssn = request.form['mpssn']
       rno = request.form['rno']
+      cond = request.form['cond']
 
       mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",(pssn,))
       check=mycursor.fetchone()
@@ -427,8 +466,8 @@ def addPatient():
         flash("This Room does not exist!","error")
         return render_template("AddPatient.html")
       else:
-        sql = "INSERT INTO Patient (pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        val = (pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno)
+        sql = "INSERT INTO Patient (pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno,cond) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val = (pssn,fname,Phone_number,Gender,Address,Insurance,epssn,mpssn,rno,cond)
         mycursor.execute(sql, val)
         mydb.commit()
         flash("The Patient added successfully","done")
@@ -440,10 +479,21 @@ def addPatient():
 @app.route('/ViewPatient',methods = ['POST', 'GET'])
 def viewPatient():
     if request.method == 'POST':
-      return render_template('index.html')
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT p.pssn,p.fname,p.Phone_number,p.Gender,p.Address,p.Insurance,p.cond,d.fname,p.rno \
+           FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn WHERE pssn=%s",(ssn,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      p_ssn=mycursor.fetchall()
+      print(p_ssn)
+      data={
+        'message':"data retrieved",
+        'rec':p_ssn,
+        'header':row_headers
+      }
+      return render_template('patient.html',data=data)
     else:
-        mycursor.execute("SELECT p.pssn,p.ID,p.fname,p.Phone_number,p.Gender,p.Address,p.Insurance,d.fname,p.mpssn,p.rno \
-           FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn")
+        mycursor.execute("SELECT pssn,fname,cond,rno \
+           FROM Patient ")
         row_headers=[x[0] for x in mycursor.description] #this will extract row headers
         myresult = mycursor.fetchall()
         data={
@@ -540,15 +590,17 @@ def register():
     username=request.form.get("username")
     password=request.form.get("password")
     confirm=request.form.get("confirm")
+    ssn=request.form.get("ssn")
     secure_password=sha256_crypt.encrypt(str(password))
 
     mycursor.execute('SELECT * FROM users WHERE username = %s', (username,))
     account = mycursor.fetchone()
+
     if account:
-      return render_template("register.html",error="THIS ACCOUNT ALREADY EXIST")
+      return render_template("register.html" ,error="already exist")
     elif password==confirm:
-      sql = "INSERT INTO users (name,username,password) VALUES ( %s,%s, %s)"
-      val = (name,username,secure_password)
+      sql = "INSERT INTO users (name,username,password,ssn) VALUES (%s,%s,%s, %s)"
+      val = (name,username,secure_password,ssn)
       mycursor.execute(sql, val)
       mydb.commit()
       flash("you are registerd and can login", "success")
@@ -566,35 +618,41 @@ def login():
     password=request.form.get("password")
 
     mycursor = mydb.cursor(buffered=True)
+
     mycursor.execute("SELECT username FROM users WHERE username=%s",(username,))
-    usernamedata=mycursor.fetchone()
+    userdata=mycursor.fetchone()
 
     mycursor.execute("SELECT password FROM users WHERE username=%s",(username,))
     passwordata=mycursor.fetchone()
-    ##############
-    mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(username,))
-    mdata=mycursor.fetchone()
-    print(mdata)
 
-    mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",(username,))
-    edata=mycursor.fetchone()
-    print(edata)
-
-    mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",(username,))
-    pdata=mycursor.fetchone()
-    print(pdata)
+    
 
 
-    if usernamedata is None:
+    if userdata is None:
       flash("No username","danger")
-      return render_template("login.html")
+      return render_template("login.html", error="NO USERNAME")
     else:
+      mycursor.execute("SELECT ssn FROM users WHERE username=%s",(username,))
+      ssn=mycursor.fetchone()
+      print(ssn)
+      ##############
+      mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",ssn)
+      mdata=mycursor.fetchone()
+      print(mdata)
+
+      mycursor.execute("SELECT essn FROM Managerial_employees WHERE essn=%s",ssn)
+      edata=mycursor.fetchone()
+      print(edata)
+
+      mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",ssn)
+      pdata=mycursor.fetchone()
+      print(pdata)
       for passwor_data in passwordata:
         if sha256_crypt.verify(password,passwor_data):
           session["log"]=True
-          flash("You are now login","success")
+          #flash("You are now login","success")
           if mdata:
-            mycursor.execute("SELECT * FROM Patient WHERE mpssn=%s",(username,))
+            mycursor.execute("SELECT * FROM Patient WHERE mpssn=%s",ssn)
             row_headers=[x[0] for x in mycursor.description] #this will extract row headers
             myresult = mycursor.fetchall()
             for x in myresult:
@@ -604,28 +662,25 @@ def login():
               'rec':myresult,
               'header':row_headers
             }
-            return render_template("newdoctor.html",data=data)
+            return render_template("newdoctor.html",data=data,message="Welcome," + username)
           elif edata:
-            mycursor.execute("SELECT fname FROM Managerial_employees WHERE essn=%s",(username,))
-            name=mycursor.fetchone()
-            print(name)
-            return render_template("admin.html")
+              return render_template("admin.html",message=" " + username)
           elif pdata :
-            mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",(username,))
-            row_headers=[x[0] for x in mycursor.description] #this will extract row headers
-            myresult = mycursor.fetchall()
-            for x in myresult:
-                print(x)
-            data={
-              'message':"data retrieved",
-              'rec':myresult,
-              'header':row_headers
-            }
-            return render_template("newpatient.html",data=data)
+              mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",ssn)
+              row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+              myresult = mycursor.fetchall()
+              for x in myresult:
+                  print(x)
+              data={
+                'message':"data retrieved",
+                'rec':myresult,
+                'header':row_headers
+              }
+              return render_template("newpatient.html",data=data,message="Welcome, " + username)
           else:
             return render_template("newhome.html")
         else:
-          flash("incorrect password","danger")
+          #flash("incorrect password","danger")
           return render_template("login.html",error="incorrect password")
 
   return render_template("login.html")
@@ -633,7 +688,7 @@ def login():
 @app.route("/logout")
 def logout():
   session.clear()
-  flash("You are logger out","success")
+  #flash("You are logger out","success")
   return render_template("index.html")
 
 

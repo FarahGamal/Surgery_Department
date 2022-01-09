@@ -1,30 +1,30 @@
 {% extends "view_room.html" %}
+
 {% block head %}
 <section class="home-section">
-  <div class="text">Patients
+  <div class="text">Employees
     <div class="container">
-      <form action="http://localhost:5000/ViewPatient" method="POST" class="d-flex">
+      <form action="http://localhost:5000/employee" method="POST" class="d-flex">
         <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
       </form> 
     </div>
   </div>
-  <a href="http://127.0.0.1:5000/AddPatient" class="button">ADD Patient</a>
+  <a href="http://127.0.0.1:5000/add_ManagerialEmployees" class="button">ADD Employee</a>
 
 
       <div style="overflow-x:auto; font-size: 18px;">
-        <table id="myTable" >
+        <table id="myTable">
         <thead>
           <tr>
-            <th scope="col">Patient SSN</th>
+            <th scope="col">Employees SSN</th>
             <th scope="col">Full Name</th>
-            <th scope="col">Phone # </th>
+            <th scope="col">Phone #</th>
             <th scope="col">Gender</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Position</th>
             <th scope="col">Address</th>
-            <th scope="col">Insurance</th>
-            <th scope="col">Condition</th>
-            <th scope="col">Doctor Name</th>
-            <th scope="col">Room #</th>
+            <th scope="col">Supervisor</th>
           </tr>
         </thead>
         <tbody>
