@@ -1,38 +1,31 @@
 {% extends "view_room.html" %}
+
 {% block head %}
 <section class="home-section">
-  <div class="text">Medical Stuff
+  <div class="text">Employees
     <div class="container">
-      <form action="http://localhost:5000/ViewMedicalStuff" method="POST" class="d-flex">
+      
+      <form action="http://localhost:5000/view_ManagerialEmployees" method="POST" class="d-flex">
         <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
-      <form action="http://localhost:5000/doctoroption" method="POST" class="d-flex">
-        <input class="form-control me-2" type="text" name="value" placeholder="Enter doctor,nurse,supervisor" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+        <form action="http://localhost:5000/emp" method="POST" class="d-flex">
+          <input class="form-control me-2" type="text" name="value" placeholder="Enter receptionist,assistant,Supervisor" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
       </form>
-      <form action="http://localhost:5000/doctor" method="POST" class="d-flex">
+      <form action="http://localhost:5000/employee" method="POST" class="d-flex">
         <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit">DELETE</button>
-      </form> 
-      
+      </form>
     </div>
   </div>
-
-  <a href="http://127.0.0.1:5000/AddMedicalStuff" class="button">ADD Medical Stuff</a>
-
-
+  <a href="http://127.0.0.1:5000/add_ManagerialEmployees" class="button">ADD Employee</a>
       <div style="overflow-x:auto; font-size: 18px;">
-        <table id="myTable" >
+        <table id="myTable">
         <thead>
           <tr>
-            <th scope="col">Medical stuff SSN</th>
+            <th scope="col">Employees SSN</th>
             <th scope="col">Full Name</th>
-            <th scope="col">Phone # </th>
-            <th scope="col">Gender</th>
-            <th scope="col">Salary</th>
             <th scope="col">Position</th>
-            <th scope="col">Address</th>
-            <th scope="col">Supervisor</th>
           </tr>
         </thead>
         <tbody>

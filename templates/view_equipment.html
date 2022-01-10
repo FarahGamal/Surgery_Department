@@ -8,7 +8,12 @@
       <form action="http://localhost:5000/view_equipment" method="POST" class="d-flex">
         <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the BIO-CODE..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
-      </form> 
+      </form>
+
+      <form action="http://localhost:5000/equipment" method="POST" class="d-flex">
+        <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">DELETE</button>
+      </form>  
     </div>
   </div>
   <a href="http://127.0.0.1:5000/add_equipment" class="button">ADD Equipment</a>
@@ -25,7 +30,8 @@
         {% for r in data.rec %}
           <tr>
             {% for l in r %}
-            <td>{{ l }}</td>
+            <td>{{ l }}
+            </td>
             {% endfor %} 
           </tr>
         {% endfor %}
@@ -33,5 +39,4 @@
       </table>
       </div>
 </section>
-     
       {% endblock %}

@@ -2,10 +2,14 @@
 
 {% block head %}
 <section class="home-section">
-  <div class="text">add_surgeries<div class="container">
+  <div class="text">Surgeries<div class="container">
     <form action="http://localhost:5000/view_surgeries" method="POST" class="d-flex">
       <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SURGERY#..." aria-label="Search">
       <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+    </form>
+    <form action="http://localhost:5000/surgery" method="POST" class="d-flex">
+      <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">DELETE</button>
     </form> 
   </div>
 </div>

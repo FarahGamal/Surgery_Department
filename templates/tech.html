@@ -1,0 +1,42 @@
+{% extends "view_room.html" %}
+{% block head %}
+<section class="home-section">
+  <div class="text">Technicians
+    <div class="container">
+        <form action="http://localhost:5000/view_Technicians" method="POST" class="d-flex">
+            <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+            <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+          <form action="http://localhost:5000/tech" method="POST" class="d-flex">
+            <input class="form-control me-2" type="text" name="value" placeholder="Enter head,biomedical,Supervisor" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+          </form>
+          <form action="http://localhost:5000/technician" method="POST" class="d-flex">
+            <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">DELETE</button>
+          </form>
+    </div>
+  </div>
+<a href="http://127.0.0.1:5000/add_Technicians" class="button">ADD Technician</a>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Technician ssn...">
+      <div style="overflow-x:auto; font-size: 18px;">
+        <table id="myTable">
+        <thead>
+          <tr>
+            <th scope="col">Technicians SSN</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Position</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for r in data.rec %}
+          <tr>
+            {% for l in r %}
+            <td>{{ l }}</td>
+            {% endfor %} 
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      </section>
+{% endblock %}

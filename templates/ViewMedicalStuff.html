@@ -1,4 +1,5 @@
 {% extends "view_room.html" %}
+{% include "includes/_message.html "%}
 {% block head %}
 <section class="home-section">
 <div class="text">Medical Stuff
@@ -6,10 +7,34 @@
       <form action="http://localhost:5000/ViewMedicalStuff" method="POST" class="d-flex">
         <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+      <form action="http://localhost:5000/doctoroption" method="POST" class="d-flex">
+        <input class="form-control me-2" type="text" name="value" placeholder="Enter doctor,nurse,supervisor" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit"><i class="uil uil-search"></i></button>
+      </form>
+      <form action="http://localhost:5000/doctor" method="POST" class="d-flex">
+        <input class="form-control me-2" type="text" name="ssn" placeholder="Enter the SSN..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">DELETE</button>
       </form> 
+       
+      
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="{{ category }}">{{ message }}</div>
+          {% endfor %}
+          {% if error %}
+              <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+    {% endif %}
+      {% endwith %}
     </div>
+    
 </div>
   <a href="http://127.0.0.1:5000/AddMedicalStuff" class="button">ADD Medical Stuff</a>
+  
+  
+
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Doctor/Nurse ssn...">
       <div style="overflow-x:auto; font-size: 18px;">
         <table id="myTable">

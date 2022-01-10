@@ -33,7 +33,43 @@ def calendar():
    return render_template('calendar.html')
 
 #!Eqipment add & view
-
+      
+@app.route('/equipment',methods = ['POST', 'GET'])
+def equipment():
+    if request.method == 'POST':
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT biocode FROM Equipment WHERE biocode=%s",(ssn,))
+      mm = mycursor.fetchall()
+      if mm is None:
+        return render_template('view_equipment.html')
+      else:
+        mycursor.execute("DELETE FROM Repair WHERE biocode=%s",(ssn,))
+        mydb.commit()
+        mycursor.execute("DELETE FROM Equipment WHERE biocode=%s",(ssn,))
+        mydb.commit()
+        print(mycursor.rowcount, "record(s) deleted")
+        mycursor.execute("SELECT biocode,type FROM Equipment")
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        p_ssn=mycursor.fetchall()
+        print(p_ssn)
+        data={
+          'message':"data retrieved",
+          'rec':p_ssn,
+          'header':row_headers
+        }
+        return render_template('view_equipment.html',data=data)
+    else:
+      mycursor.execute("SELECT biocode,type FROM Equipment")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('equipment.html',data=data)
+    
+###################################################################?
 @app.route('/add_equipment',methods = ['POST', 'GET'])
 def addequipment():
    if request.method == 'POST': ##check if there is post data
@@ -91,6 +127,58 @@ def viewequipment():
       return render_template('view_equipment.html',data=data)
 
 #! Surgeries add & view
+
+@app.route('/surgery',methods = ['POST', 'GET'])
+def deletesurgeries():
+    if request.method == 'POST':
+      ssn=request.form.get('ssn')
+
+      mycursor.execute("SELECT surgery_number FROM Surgeries WHERE surgery_number=%s",(ssn,))
+      mm = mycursor.fetchall()
+      print(mm)
+
+      if mm is None:
+        flash("This SSN does not exist!","error")
+        return render_template('view_surgeries.html')
+      else:
+        mycursor.execute("DELETE FROM Works_On WHERE Sno=%s",(ssn,))
+        mydb.commit()
+        #############
+        mycursor.execute("DELETE FROM Surgeries WHERE surgery_number=%s",(ssn,))
+        mydb.commit()
+        ##########
+        mycursor.execute("SELECT surgery_number,type FROM Surgeries  WHERE code IN ('red', 'yellow', 'green','blue') \
+         ORDER BY CASE code \
+           WHEN 'red' THEN 1 \
+              WHEN 'yellow' THEN 2 \
+                WHEN 'green' THEN 3 \
+                  WHEN 'blue' THEN 4 \
+                END , start_time ")
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        p_ssn=mycursor.fetchall()
+        print(p_ssn)
+        data={
+          'message':"data retrieved",
+          'rec':p_ssn,
+          'header':row_headers
+        }
+        return render_template('view_surgeries.html',data=data)
+    else:
+      mycursor.execute("SELECT surgery_number,type FROM Surgeries  WHERE code IN ('red', 'yellow', 'green','blue') \
+         ORDER BY CASE code \
+           WHEN 'red' THEN 1 \
+              WHEN 'yellow' THEN 2 \
+                WHEN 'green' THEN 3 \
+                  WHEN 'blue' THEN 4 \
+                END , start_time ")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('view_surgeries.html',data=data)
 
 @app.route('/add_surgeries',methods = ['POST', 'GET'])
 def addsurgeries():
@@ -178,6 +266,101 @@ def viewroom():
 
 #! Managerial Employees add & view
 
+@app.route('/emp',methods = ['POST', 'GET'])
+def empoption():
+  if request.method == 'POST':
+    value=request.form.get('value')
+    print(value)
+    if value == 'receptionist':
+        mycursor.execute("SELECT essn,fname,Position FROM Managerial_employees WHERE Position=%s",(value,))
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+        }
+        return render_template('emp.html',data=data)
+    elif value == 'assistant':
+        mycursor.execute("SELECT essn,fname,Position FROM Managerial_employees WHERE Position=%s",(value,))
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+        }
+        return render_template('emp.html',data=data)
+    elif value == 'supervisor':
+      mycursor.execute("SELECT s.essn,s.fname,s.Position FROM Managerial_employees AS f \
+        JOIN Managerial_employees AS s ON f.essn=s.esssn")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+      }
+      return render_template('emp.html',data=data)
+    else:
+      mycursor.execute("SELECT essn, fname, Position FROM Managerial_employees")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+        }
+      return render_template('ViewMedicalStuff.html',data=data)
+
+@app.route('/employee',methods = ['POST', 'GET'])
+def deletemployee():
+     if request.method == 'POST':
+        ssn=request.form.get('ssn')
+        mycursor.execute("SELECT essn FROM Medical_stuff WHERE essn=%s",(ssn,))
+        mm = mycursor.fetchall()
+        print(mm)
+        if mm is None:
+          flash("This SSN does not exist!","error")
+          return render_template('view_ManagerialEmployees.html')
+        else:
+          mycursor.execute("UPDATE Managerial_employees SET esssn=%s WHERE esssn=%s",(None,ssn,))
+          mydb.commit()
+          ##########################
+          mycursor.execute("UPDATE Patient SET epssn=%s WHERE epssn=%s",(None,ssn,))
+          mydb.commit()
+          ############################
+          mycursor.execute("DELETE FROM Medical_stuff WHERE essn=%s",(ssn,))
+          mydb.commit()
+          ###################
+          mycursor.execute("UPDATE Technicians SET tessn=%s WHERE tessn=%s",(None,ssn,))
+          mydb.commit()
+          ###################
+          mycursor.execute("DELETE FROM Managerial_employees WHERE essn=%s",(ssn,))
+          mydb.commit()
+
+          print(mycursor.rowcount, "record(s) deleted")
+          mycursor.execute("SELECT essn, fname, Position FROM Managerial_employees")
+          row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+          p_ssn=mycursor.fetchall()
+          print(p_ssn)
+          data={
+            'message':"data retrieved",
+            'rec':p_ssn,
+            'header':row_headers
+          }
+          return render_template('view_ManagerialEmployees.html',data=data)
+     else:
+      mycursor.execute("SELECT essn, fname, Position FROM Managerial_employees")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+        }
+      return render_template('employee.html',data=data)
+
 @app.route('/add_ManagerialEmployees',methods = ['POST', 'GET'])
 def addManagerialEmployees():
     if request.method == 'POST': ##check if there is post data
@@ -241,6 +424,96 @@ def viewManagerialEmployees():
 
 
 #! Technicians add & view
+@app.route('/tech',methods = ['POST', 'GET'])
+def technician():
+  if request.method == 'POST':
+    value=request.form.get('value')
+    print(value)
+    if value == 'Head biomedical':
+        mycursor.execute("SELECT ssn,fname,Position FROM Technicians WHERE Position=%s",(value,))
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+        }
+        return render_template('tech.html',data=data)
+    elif value == 'biomedical':
+        mycursor.execute("SELECT ssn,fname,Position FROM Technicians WHERE Position=%s",(value,))
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+        }
+        return render_template('tech.html',data=data)
+    elif value == 'supervisor':
+      mycursor.execute("SELECT s.ssn,s.fname,s.Position FROM Technicians AS f \
+        JOIN Technicians AS s ON f.ssn=s.tssn")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+      }
+      return render_template('tech.html',data=data)
+    else:
+      mycursor.execute("SELECT ssn,fname,Position FROM Technicians")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+        }
+      return render_template('view_Technicians.html',data=data)
+
+
+@app.route('/technician',methods = ['POST', 'GET'])
+def deleteTechnicians():
+    if request.method == 'POST':
+      ssn=request.form.get('ssn')
+
+      mycursor.execute("SELECT ssn FROM Technicians WHERE ssn=%s",(ssn,))
+      mm = mycursor.fetchall()
+      print(mm)
+      
+      if mm is None:
+        flash("This SSN does not exist!","error")
+        return render_template('view_Technicians.html')
+      else:
+        mycursor.execute("DELETE FROM Repair WHERE rssn=%s",(ssn,))
+        mydb.commit()
+        #############
+        mycursor.execute("UPDATE Technicians SET tssn=%s WHERE tssn=%s",(None,ssn,))
+        mydb.commit()
+        ##############
+        mycursor.execute("DELETE FROM Technicians WHERE ssn=%s",(ssn,))
+        mydb.commit()
+        ##########
+        mycursor.execute("SELECT ssn,fname,Position FROM Technicians")
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        p_ssn=mycursor.fetchall()
+        print(p_ssn)
+        data={
+          'message':"data retrieved",
+          'rec':p_ssn,
+          'header':row_headers
+        }
+        return render_template('view_Technicians.html',data=data)
+    else:
+      mycursor.execute("SELECT ssn,fname,Position FROM Technicians")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+        }
+      return render_template('technician.html',data=data)
 
 @app.route('/add_Technicians',methods = ['POST', 'GET'])
 def addTechnicians():
@@ -357,7 +630,99 @@ def viewWorksOn():
       return render_template('view_WorksOn.html',data=data)
 
 #! Medical stuff add & view
+@app.route('/doctor',methods = ['POST', 'GET'])
+def deletedoctor():
+    if request.method == 'POST':
+      ssn=request.form.get('ssn')
+      mycursor.execute("SELECT mssn FROM Medical_stuff WHERE mssn=%s",(ssn,))
+      mm = mycursor.fetchall()
+      print(mm)
+      if mm is None:
+        flash("This SSN does not exist!","error")
+        return render_template('ViewMedicalStuff.html')
+      else:
+        mycursor.execute("UPDATE Medical_stuff SET msssn=%s WHERE msssn=%s",(None,ssn,))
+        mydb.commit()
+        ##########################
+        mycursor.execute("UPDATE Patient SET mpssn=%s WHERE mpssn=%s",(None,ssn,))
+        mydb.commit()
+        ############################
+        mycursor.execute("DELETE FROM Works_on WHERE sssn=%s",(ssn,))
+        mydb.commit()
+        ############################
+        mycursor.execute("DELETE FROM Medical_stuff WHERE mssn=%s",(ssn,))
+        mydb.commit()
+        ###################
+        print(mycursor.rowcount, "record(s) deleted")
+        mycursor.execute("SELECT mssn,fname,Position FROM Medical_stuff")
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        p_ssn=mycursor.fetchall()
+        print(p_ssn)
+        data={
+          'message':"data retrieved",
+          'rec':p_ssn,
+          'header':row_headers
+        }
+        return render_template('ViewMedicalStuff.html',data=data)
+    else:
+      mycursor.execute("SELECT mssn,fname,Position FROM Medical_stuff")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('doctor.html',data=data)
 
+@app.route('/doctoroption',methods = ['POST', 'GET'])
+def doctoroption():
+  if request.method == 'POST':
+    value=request.form.get('value')
+    print(value)
+    if value == 'doctor':
+        mycursor.execute("SELECT mssn,fname,Position FROM Medical_stuff WHERE Position=%s",(value,))
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+        }
+        return render_template('doctoroption.html',data=data)
+    elif value== 'nurse':
+      mycursor.execute("SELECT mssn,fname,Position FROM Medical_stuff WHERE Position=%s",(value,))
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+      }
+      return render_template('doctoroption.html',data=data)
+    elif value == 'supervisor':
+      mycursor.execute("SELECT s.mssn,s.fname,s.Position FROM Medical_stuff AS f \
+        JOIN Medical_stuff AS s ON f.mssn=s.msssn")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+      }
+      return render_template('doctoroption.html',data=data)
+    else:
+      mycursor.execute("SELECT mssn,fname,Position FROM Medical_stuff")
+      row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+        }
+      return render_template('ViewMedicalStuff.html',data=data)
+
+#################################################################################?
 @app.route('/AddMedicalStuff',methods = ['POST', 'GET'])
 def addMedicalStuff():
     if request.method == 'POST': ##check if there is post data
@@ -426,6 +791,52 @@ def viewMedicalStuff():
       return render_template('ViewMedicalStuff.html',data=data)
 
 #! Patient add & view
+@app.route('/patient',methods = ['POST', 'GET'])
+def deletePatient():
+    if request.method == 'POST':
+        ssn=request.form.get('ssn')
+        mycursor.execute("SELECT pssn FROM Patient WHERE pssn=%s",(ssn,))
+        mm = mycursor.fetchall()
+        print(mm)
+        if mm is None:
+          flash("This SSN does not exist!","error")
+          return render_template('ViewPatient.html')
+        else:
+          mycursor.execute("SELECT surgery_number FROM Surgeries WHERE pssn=%s",(ssn,))
+          sno=mycursor.fetchone()
+          mycursor.execute("DELETE FROM Works_On WHERE Sno=%s" ,sno)
+          mydb.commit()
+          ####################
+          mycursor.execute("DELETE FROM Surgeries WHERE pssn=%s",(ssn,))
+          mydb.commit()
+          ####################
+          mycursor.execute("DELETE FROM Patient WHERE pssn=%s",(ssn,))
+          mydb.commit()
+
+          print(mycursor.rowcount, "record(s) deleted")
+          mycursor.execute("SELECT pssn,fname,cond,rno \
+           FROM Patient ")
+          row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+          p_ssn=mycursor.fetchall()
+          print(p_ssn)
+          data={
+            'message':"data retrieved",
+            'rec':p_ssn,
+            'header':row_headers
+          }
+          return render_template('ViewPatient.html',data=data)
+    else:
+        mycursor.execute("SELECT p.pssn,p.fname,p.Phone_number,p.Gender,p.Address,p.Insurance,p.cond,d.fname,p.rno \
+           FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn ")
+        row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+        myresult = mycursor.fetchall()
+        data={
+          'message':"data retrieved",
+          'rec':myresult,
+          'header':row_headers
+          }
+        return render_template('patient.html',data=data)
+
 
 @app.route('/AddPatient',methods = ['POST', 'GET'])
 def addPatient():
@@ -538,8 +949,8 @@ def viewRepair():
     if request.method == 'POST':
       return render_template('index.html')
     else:
-        mycursor.execute("SELECT fname,tssn,type,r.biocode \
-          FROM Technicians AS t JOIN Repair as r ON t.tssn=r.rssn \
+        mycursor.execute("SELECT fname,ssn,type,r.biocode \
+          FROM Technicians AS t JOIN Repair as r ON t.ssn=r.rssn \
             JOIN Equipment AS e on r.biocode=e.biocode")
         row_headers=[x[0] for x in mycursor.description] #this will extract row headers
         myresult = mycursor.fetchall()
@@ -625,8 +1036,6 @@ def login():
     mycursor.execute("SELECT password FROM users WHERE username=%s",(username,))
     passwordata=mycursor.fetchone()
 
-    
-
 
     if userdata is None:
       flash("No username","danger")
@@ -671,6 +1080,7 @@ def login():
                   FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn WHERE pssn=%s",ssn)
               row_headers=[x[0] for x in mycursor.description] #this will extract row headers
               myresult = mycursor.fetchall()
+              print(myresult)
               for x in myresult:
                   print(x)
               data={
