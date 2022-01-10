@@ -652,7 +652,8 @@ def login():
           session["log"]=True
           #flash("You are now login","success")
           if mdata:
-            mycursor.execute("SELECT * FROM Patient WHERE mpssn=%s",ssn)
+            mycursor.execute("SELECT p.pssn,p.fname,p.Phone_number,p.Gender,p.Address,p.Insurance,p.cond,d.fname,p.rno \
+                  FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn WHERE mpssn=%s",ssn)
             row_headers=[x[0] for x in mycursor.description] #this will extract row headers
             myresult = mycursor.fetchall()
             for x in myresult:
@@ -666,7 +667,8 @@ def login():
           elif edata:
               return render_template("admin.html",message=" " + username)
           elif pdata :
-              mycursor.execute("SELECT * FROM Patient WHERE pssn=%s",ssn)
+              mycursor.execute("SELECT p.pssn,p.fname,p.Phone_number,p.Gender,p.Address,p.Insurance,p.cond,d.fname,p.rno \
+                  FROM Patient AS p JOIN Medical_stuff AS d ON p.mpssn=d.mssn WHERE pssn=%s",ssn)
               row_headers=[x[0] for x in mycursor.description] #this will extract row headers
               myresult = mycursor.fetchall()
               for x in myresult:
